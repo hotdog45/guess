@@ -14,7 +14,7 @@
         <img class="public" src="@/assets/images/public.png">
       </div>
       <div class="publicLab">发布</div>
-      
+
       <div class="bodyBtn">
         <div class="btn1">
           <img  src="@/assets/images/me.png">
@@ -28,7 +28,7 @@
           <div class="tip2"  style="text-align: left;">三个字</div>
           <img style="width: 37px;height: 37px;" src="@/assets/images/icon2.png">
           <div class="tip" style="color:#000;font-size=11px;">提示</div>
-          
+
         </div>
 
       </div>
@@ -47,11 +47,12 @@
       </marquee>
     </div>
     </div>
-    
+
   </div>
 </template>
 
 <script>
+import { getPluginsGuessList, getPluginsGuessAnwser } from "@/api/sigua";
 import { closePixelate } from "../../utils/close-pixelate";
 
 window.onload = function() {
@@ -61,21 +62,56 @@ window.onload = function() {
   dolly.width = window.screen.width;
   dolly.closePixelate(pixelOpts);
 
-  var dolly1 = document.getElementById("dolly1");
-  dolly1.width = window.screen.width;
-  dolly1.closePixelate(pixelOpts);
+  // var dolly1 = document.getElementById("dolly1");
+  // dolly1.width = window.screen.width;s
+  // dolly1.closePixelate(pixelOpts);
 };
 
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      list: []
+    };
   },
 
-  methods: {},
+  methods: {
+    getlist() {
+      var data = {
+        page: "1",
+        total:"30"
+      };
+      getPluginsGuessList().then(res => {
+        if (res.code == 200) {
+          this.list = res.data.records;
+        } else {
+          alert("请求失败,稍后重试!");
+        }
+
+      });
+    },
+
+    postAnwser() {
+      var data = {
+        answer: "qqqqq"
+      };
+      var id = 1;
+      getPluginsGuessAnwser(id, data).then(res => {
+        if (res.code == 200) {
+          alert("请求成功!");
+        } else {
+          alert("请求失败,稍后重试!");
+        }
+      });
+    }
+  },
 
   //created创建完毕状态
-  created() {}
+  created() {
+    window.localStorage.token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
+    this.getlist();
+  }
 };
 </script>
 
@@ -103,7 +139,7 @@ export default {
 .view {
   z-index: 1000;
   position: fixed;
-  background: rgba(90, 90, 90, 1);
+  background: rgba(90, 90, 90, 0);
   bottom: 0;
   left: 0;
   right: 0;
@@ -235,3 +271,5 @@ export default {
   font-size: 15px;
 }
 </style>
+
+

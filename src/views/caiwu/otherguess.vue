@@ -18,6 +18,7 @@
                     <div class="avator">
                         <img src="" alt="">
                     </div>
+
                     <div class="intro-detail">
                         <div class="intro-name">大豆</div>
                         <div class="intro-address">北京-西城区</div>
@@ -27,7 +28,7 @@
                 </div>
                 <div class="btn-rapper">
                     <div class="right-btn success">你猜对了</div>
-                    <div class="right-btn detail-talk">细聊</div>
+                    <div class="right-btn detail-talk">细聊2</div>
                 </div>
                 
             </div>

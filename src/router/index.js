@@ -11,7 +11,7 @@ export const constantRouterMap = [
   { path: "/otherguess", component: asyncImport("caiwu/otherguess") },
 
   {
-    path: "/home",
+    path: "/",
     name: "Tab",
     component: asyncImport("Business/Tab"),
     redirect: "/home", //重定向到首页
@@ -70,7 +70,8 @@ export const constantRouterMap = [
 ];
 
 export default new Router({
-  // mode: 'history',
+  mode: "history",
+  // base: "guess",
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 });

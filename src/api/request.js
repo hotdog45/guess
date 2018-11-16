@@ -1,66 +1,65 @@
-import axios from 'axios';
-import https from 'https';
+import axios from "axios";
+import https from "https";
 // api root
-export const apiRoot = `/api/cxwap`;//cxwap
-
-// headers :{'token': window.localStorage.token},
+export const apiRoot = `/host/api/v1`; //cxwap
+// export const apiRoot = `/api/cxwap`; //
 var newRquest = axios.create({
   baseURL: apiRoot,
   httpsAgent: new https.Agent({ keepAlive: true, rejectUnauthorized: false }),
   transformRequest(params) {
-
     return JSON.stringify(params);
-  },
+  }
 });
 
 // request interceptor
 newRquest.interceptors.request.use(
-  (config) => {
+  config => {
     // access token
     const { method } = config;
     // const token = getToken();
 
-    if (method === 'get') {
+    if (method === "get") {
       config.params = {
-        ...config.params,
+        ...config.params
       };
     } else {
       config.data = {
-        ...config.data,
+        ...config.data
       };
     }
 
     return config;
   },
-  (error) => {
+  error => {
     // Do something with request error
     Promise.reject(error);
-  },
+  }
 );
 
 // respone interceptor
 newRquest.interceptors.response.use(
-  (response) => {
+  response => {
     const res = response.data;
     const { msg, status } = res;
 
     if (status !== 0) {
-      console.log('msg', msg);
+      console.log("msg", msg);
     }
 
     return res;
   },
-  error => Promise.reject(error),
+  error => Promise.reject(error)
 );
-newRquest.defaults.headers.post['Content-Type'] = 'application/json';
-var token = window.localStorage.token;
-if (token){
-  newRquest.defaults.headers.post['token'] = token;
-}else {
-  newRquest.defaults.headers.post['token'] = 'a3516c97fdcb5e143b78da4b8279a791';
-}
-var inviteCode = window.localStorage.inviteCode;
-if (inviteCode){
-  newRquest.defaults.headers.post['inviteCode'] = inviteCode;
-}
+newRquest.defaults.headers.post["Content-Type"] = "application/json";
+newRquest.defaults.headers.get["Content-Type"] = "application/json";
+// var token = window.localStorage.token;
+// if (token) {
+//   newRquest.defaults.headers.get["token"] = token;
+//   newRquest.defaults.headers.post["token"] = token;
+// } else {
+newRquest.defaults.headers.get["token"] =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
+newRquest.defaults.headers.post["token"] =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
+// }
 export default newRquest;
