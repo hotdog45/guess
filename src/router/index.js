@@ -9,6 +9,8 @@ export const constantRouterMap = [
   { path: "/guess", component: asyncImport("caiwu/guess") },
   { path: "/myguess", component: asyncImport("caiwu/myguess") },
   { path: "/otherguess", component: asyncImport("caiwu/otherguess") },
+  { path: "/test11", component: asyncImport("caiwu/test") },
+
 
   {
     path: "/",

@@ -25,6 +25,8 @@ FastClick.attach(document.body);
 
 import * as filter from "./filter"; // global filters
 import "./utils/bridge";
+import touch from "./utils/swipe";
+Vue.use(touch)
 // components
 import { install } from "./components/index"; // all global components
 install(Vue);

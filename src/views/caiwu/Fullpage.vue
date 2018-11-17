@@ -1,16 +1,19 @@
+/**
+* Created by lishunfeng on 2018/11/16.
+*/
 <template>
-  <div class="bg">
-    <div class="thumb"   >
-      <img class="test" :src="item.image_src"  :id="dolly()" />
+  <div class="full-page" v-if="option" :class="{'page-before': option.index < currentPage,
+'page-after': option.index > currentPage,
+  'page-current': option.index === currentPage}" >
+    <!--<slot></slot>-->
+    <div v-if="option.index ==0" class="one"> </div>
+    <div v-if="option.index ==1" class="one1"> </div>
+    <div v-if="option.index ==2" class="one2"> </div>
+    <div class="thumb" >
+      <img class="test" src="@/assets/images/5555.jpeg"  />
     </div>
 
-    <div class="view" ref="mybox"s
-         v-tap="(e)=>vueTouch('点击',e)"
-         v-longtap="(e)=>vueTouch('长按',e)"
-         v-swipeleft="(e)=>vueTouch('左滑',e)"
-         v-swiperight="(e)=>vueTouch('右滑',e)"
-         v-swipeup="(e)=>vueTouch('上滑',e)"
-         v-swipedown="(e)=>vueTouch('下滑',e)">
+    <div class="view" >
       <div class="header">
         <img class="back" src="@/assets/images/back.png">
         <div></div>
@@ -28,7 +31,7 @@
           <div>{{}}1</div>
         </div>
         <div class="tipdiv">
-          <div class="tip2" style="text-align: left;">{{item.description}}</div>
+          <div class="tip2" style="text-align: left;">1111</div>
           <img style="width: 37px;height: 37px;" src="@/assets/images/icon2.png">
           <div class="tip" style="color:#000;font-size=11px;">提示</div>
 
@@ -55,142 +58,66 @@
 </template>
 
 <script>
-  import {getPluginsGuessList, getPluginsGuessAnwser} from "@/api/sigua";
-  import {closePixelate} from "../../utils/close-pixelate";
-
-
-  var dolly = ''
-  var pixelOpts = [{resolution: 34}];
-  window.onload = function () {
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var dolly1 = document.getElementById(dolly);
-      dolly1.width = window.screen.width;
-      dolly1.closePixelate(pixelOpts);
-      alert("DOMContentLoaded调用了onload")
-    }, false)
-
-//
-//
-//
-//    var dolly = document.getElementById("dolly0");
-//    dolly.width = window.screen.width;
-//    dolly.closePixelate(pixelOpts);
-//
-
-
-    document.getElementById('list').addEventListener("DOMSubtreeModified", function(){
-      console.log('列表中子元素被修改');
-    }, false);
-
-  };
-
   export default {
-    components: {},
-    data() {
+    data () {
       return {
-        list: [],
-        index: 0,
-        item:{},
-      };
+        option: null,
+        img:"http://m1.jamootime.com/guess/181004231009_153865994345547551.jpg",
+      }
     },
-
-    methods: {
-      getItem(){
-        this.item = this.list[this.index]
-        return this.item
-
-      },
-
-      dolly(){
-        return "dolly" +this.index
-      },
-
-
-      vueTouch(txt,e){
-        if (txt == "下滑") {
-//          if (this.list.length < parseInt(this.index) ){
-
-            this.index = parseInt(this.index)+1
-            alert("this.index"+this.index)
-//          }else {
-//            alert("没有更多了"+this.list.length)
-//          }
-        }else if (txt == "上滑") {
-//          if (parseInt(this.index) <=0){
-//            alert("到顶了!"+this.index)
-//          }else {
-            this.index = parseInt(this.index)-1
-//          }
-
-          dolly = "dolly"+this.index
-            alert("this.index"+this.index+"ppppppp"+dolly)
-
-
-        }
-        this.getItem()
-
-      },
-
-
-
-      getList() {
-        var data = {
-          page: "1",
-          total:"20"
-        };
-        var id = 1;
-        getPluginsGuessList(data).then(res => {
-          if (res.code == 200) {
-            this.list = res.data.records
-
-          } else {
-            alert("请求失败,稍后重试!");
-          }
-        });
-      },
-      postAnwser() {
-        var data = {
-          answer: "qqqqq"
-        };
-        var id = 1;
-        getPluginsGuessAnwser(id, data).then(res => {
-          if (res.code == 200) {
-            alert("请求成功!");
-          } else {
-            alert("请求失败,稍后重试!");
-          }
-        });
-      },
-
-
-
+    created () {
+      console.log(this.option)
     },
-
-    //created创建完毕状态
-    created() {
-//      var pixelOpts = [{resolution: 34}];
-//
-//      var dolly = document.getElementById("dolly");
-////      dolly.width = '375px'
-//      dolly.closePixelate(pixelOpts);
-
-      window.localStorage.token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
-    this.getList();
-//      this.test()
-    }
-  };
+    props: ['currentPage']
+  }
 </script>
 
-<style scoped lang="less" rel="stylesheet/less">
-  .bg {
-    position: relative;
+<style scoped>
+  .full-page {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all 0.5s ease 0s;
+    z-index: 1;
+    background-color: rgba(0,0,0,0.7);
   }
 
+  .page-before {
+    z-index: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  .page-after {
+    z-index: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  .one{
+    background: #0bb20c;
+    height:667px;
+    width:375px;
+  }
+  .one1{
+    background: #95713d;
+    height:607px;
+    width:375px;
+  }
+  .one2{
+    background: #409EFF;
+    height:607px;
+    width:375px;
+  }
   .test {
-    visibility: hidden;
+    /*visibility: hidden;*/
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    top:0;margin: auto 0;
+    z-index: 2;
+    line-height: 100%;
   }
 
   .thumb {
@@ -202,7 +129,7 @@
     right: 0;
     top: 0;
     margin: auto 0;
-    z-index: 1;
+    z-index: 11;
   }
 
   .view {
@@ -350,5 +277,3 @@
     font-size: 15px;
   }
 </style>
-
-
