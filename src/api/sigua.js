@@ -1,7 +1,7 @@
 import request from "./request";
 
 //创建猜物
-export function getPluginsGuess(id, params) {
+export function getPluginsGuess( params) {
   return request.post("plugins/guess/", params);
 }
 
@@ -11,7 +11,7 @@ export function getPluginsGuessDesc(id) {
 }
 
 //获取猜物列表
-export function getPluginsGuessList() {
+export function getPluginsGuessList(params) {
   return request.get("plugins/guess");
 }
 
@@ -38,7 +38,8 @@ export function getPluginsGuessMy(params) {
 export function getPluginsGuessMyAnswer(params) {
   return request.get("plugins/guess/my_answer", params);
 }
-//获取猜物答案列表
-export function getPluginsGuessForward(id, params) {
-  return request.get("plugins/guess/" + id + "/forward", params);
+
+//转发猜物
+export function getPluginsGuessForward(id) {
+  return request.post("plugins/guess/" + id + "/forward");
 }

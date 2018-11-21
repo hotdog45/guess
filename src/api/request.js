@@ -1,8 +1,7 @@
 import axios from "axios";
 import https from "https";
 // api root
-export const apiRoot = `/host/api/v1`; //cxwap
-// export const apiRoot = `/api/cxwap`; //
+export const apiRoot = `/host/api/v1`;
 var newRquest = axios.create({
   baseURL: apiRoot,
   httpsAgent: new https.Agent({ keepAlive: true, rejectUnauthorized: false }),
@@ -58,7 +57,7 @@ newRquest.defaults.headers.get["Content-Type"] = "application/json";
 //   newRquest.defaults.headers.post["token"] = token;
 // } else {
 newRquest.defaults.headers.get["token"] =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU"
 newRquest.defaults.headers.post["token"] =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
 // }

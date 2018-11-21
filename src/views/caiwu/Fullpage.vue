@@ -2,55 +2,66 @@
 * Created by lishunfeng on 2018/11/16.
 */
 <template>
-  <div class="full-page" v-if="option" :class="{'page-before': option.index < currentPage,
-'page-after': option.index > currentPage,
-  'page-current': option.index === currentPage}" >
-    <!--<slot></slot>-->
-    <div v-if="option.index ==0" class="one"> </div>
-    <div v-if="option.index ==1" class="one1"> </div>
-    <div v-if="option.index ==2" class="one2"> </div>
+  <div class="full-page" v-if="option" :class="{'page-before': index < currentPage,
+'page-after': index > currentPage,
+  'page-current': index === currentPage}" >
     <div class="thumb" >
-      <img class="test" src="@/assets/images/5555.jpeg"  />
+      <img class="test" :src="option.image_src"  />
+    </div>
+
+    <div class="thumb2" v-if="show3">
+      <img class="test2" src="@/assets/images/caizhong.png" @click="show3click" />
     </div>
 
     <div class="view" >
       <div class="header">
-        <img class="back" src="@/assets/images/back.png">
+        <img class="back" @click="back" src="@/assets/images/back.png">
         <div></div>
-        <img class="public" src="@/assets/images/public.png">
+        <img @click="publicGuess" class="public" src="@/assets/images/public.png">
       </div>
-      <div class="publicLab">发布</div>
+      <div class="publicLab"  @click="publicGuess">发布</div>
 
       <div class="bodyBtn">
-        <div class="btn1">
+        <div class="btn1" @click="myguess">
           <img src="@/assets/images/me.png">
           <div>自己</div>
         </div>
-        <div>
+        <div @click="share">
           <img src="@/assets/images/share.png">
-          <div>{{}}1</div>
+          <div>{{option.stat ?option.stat.forward:'0'}}</div>
         </div>
-        <div class="tipdiv">
-          <div class="tip2" style="text-align: left;">1111</div>
+        <div class="tipdiv" >
+          <div class="tip2" style="text-align: left;" v-if="show2">{{option.correct_answer[0].length}}个字</div>
           <img style="width: 37px;height: 37px;" src="@/assets/images/icon2.png">
-          <div class="tip" style="color:#000;font-size=11px;">提示</div>
+          <div class="tip" style="color:#000;font-size=11px;" @click="showclick2">提示</div>
 
         </div>
 
       </div>
       <div class="foot">
         <div>
-          <img class="role" src="@/assets/images/role.png">
-          <input class="name">
-          <div class="send">发送</div>
+          <img class="role" src="@/assets/images/role.png" @click="showclick">
+          <input v-model="answer" class="name">
+          <div @click="postAnwser" class="send">发送</div>
 
         </div>
         <marquee class="desc" width=90% direction=left align=middle>
-          @虎嗅【2018天猫双11战绩：成交额2135亿元，物流单量超10亿】双11开启当晚，
-          2分零5秒成交额超过100亿元；一小时达到672.6亿元（接近100亿美金）；15小时49分39秒，
-          破2017年11月11日全天交易额；22小时28分37秒，成交额突破2000亿元。
-
+          <div v-for="(item,index) in option.answers">
+            <div v-if="item.userInfo != null">@{{item.userInfo == null ?"":item.userInfo.nickname}}: <span>{{item == null ?"":item.answer}}</span></div>
+          </div>
         </marquee>
+      </div>
+    </div>
+    <div class="roleDesc" @click="showclick" v-if="show1">
+      <div>
+        <div style="text-align: center;margin-top: 20px;">猜物规则</div>
+        <div style="display: flex;flex-direction: column;padding: 7px 8px 0 11px">
+            <div class="roletext"><span class="rolep">+&nbsp;</span>每天一人最多猜5次,若次数已满，需发布一
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件猜物换取5次猜物机会。</div>
+            <div class="roletext"><span class="rolep">+&nbsp;</span>为了更好地沟通，发布猜物答案同时将自动
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关注物主。</div>
+            <div class="roletext"><span class="rolep">+&nbsp;</span>猜中后若快递寄送物件,猜中方需承担运费。</div>
+          </div>
       </div>
     </div>
 
@@ -58,21 +69,166 @@
 </template>
 
 <script>
+  import {getPluginsGuessList, getPluginsGuessAnwser,
+    getPluginsGuessForward} from "@/api/sigua";
+
+//  import invoke from 'react-native-webview-bridge'
+//  import invoke from 'react-native-webview-invoke/browser'
+
+  var invoke = window.WebViewInvoke
+  var toast = invoke.bind('toast');
+  var onPushScreen = invoke.bind('onPushScreen');
+  var goBack = invoke.bind('goBack');
+  var forward = window.WebViewInvoke.bind('forward');
+  var getLocalUser = window.WebViewInvoke.bind('getLocalUser');
+
   export default {
     data () {
       return {
         option: null,
         img:"http://m1.jamootime.com/guess/181004231009_153865994345547551.jpg",
+        answer:'',
+        show1:false,
+        show2:false,
+        show3:false,
+        user:{},
       }
     },
-    created () {
-      console.log(this.option)
+    methods: {
+      back(){
+        goBack()
+      },
+      myguess(){
+        this.$router.push({
+          path: '/myguess',
+        })
+      },
+      publicGuess(){
+
+        onPushScreen({
+          page: 'Pages/MediaFullScreen', params: {
+            from: 'GUESS',
+            mediaType: 'photo',
+            nextPage: 'GUESS'
+          }
+        });
+        var that = this
+        window.WebViewInvoke.define('onMediaCallback',function(data) {
+          data = data || {};
+          var imgt = data.data +""
+//          window.localStorage.imgurl = imgt
+//          var imgt = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=4183927244,732328870&fm=173&app=25&f=JPEG?w=550&h=367&s=3A156984068606F5A624799C03008094";
+//          var imgt = "http://m1.jamootime.com/upload/154278953997132536.jpg"
+          window.localStorage.imgurl =imgt
+          if (window.localStorage.imgurl){
+            that.$router.push({
+              path: '/public',
+            })
+          }
+
+
+//          var url = window.location.href
+//          window.location.href = url+"/public";
+//          window.location.reload();
+//            setTimeout(function () {
+//              that.$router.push({
+//                path: '/public',
+//              })
+//            },1000)
+        });
+
+
+
+
+
+      },
+      show3click(){
+        this.show3 = false
+
+      },
+
+      showclick(){
+        this.show1 = !this.show1
+      },
+
+      showclick2(){
+        this.show2 = !this.show2
+      },
+
+      share(){
+        forward({
+          avatar: this.user.avatar,
+          image: this.option.image_src,
+          subTitle: "猜物",
+          title: "快来猜猜",
+          topic_id: this.option.id,
+          type: "share",
+        });
+//        var id = this.option.id;
+//        getPluginsGuessForward(id).then(res => {
+//          if (res.code == 200) {
+//            toast('转发成功!');
+//          } else {
+//            toast(res.msg);
+//          }
+//        });
+      },
+
+      postAnwser() {
+        var data = {
+          answer: this.answer
+        };
+        var id = this.option.id;
+        getPluginsGuessAnwser(id, data).then(res => {
+          if (res.code == 200) {
+            if(res.data.is_corret){
+              this.show2 = true
+            }else {
+              toast('和答案就差一点点\n再猜猜其他的吧');
+            }
+          } else {
+            toast(res.msg);
+          }
+        });
+      },
     },
-    props: ['currentPage']
+    created () {
+      getLocalUser().then(ret=>{
+        user = ret
+        window.localStorage.token  = ret.token;
+      }).catch();
+    },
+    props: ['currentPage','option','index']
   }
 </script>
 
 <style scoped>
+
+  .roleDesc{
+    z-index: 1010;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.8);
+    bottom: 0;
+    left: 18px;
+    right: 18px;
+    height: 218px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color: #fff;
+    font-size: 15px;
+  }
+
+
+  .rolep{
+    font-size: 22px;
+  }
+
+
+  .roletext{
+    padding: 4px 0 0px 4px;
+  }
+
+
   .full-page {
     overflow: hidden;
     position: fixed;
@@ -95,29 +251,13 @@
     transform: translate3d(0, 100%, 0);
   }
 
-  .one{
-    background: #0bb20c;
-    height:667px;
-    width:375px;
-  }
-  .one1{
-    background: #95713d;
-    height:607px;
-    width:375px;
-  }
-  .one2{
-    background: #409EFF;
-    height:607px;
-    width:375px;
-  }
+
   .test {
-    /*visibility: hidden;*/
     width: 100%;
     position: fixed;
     bottom: 0;
-    top:0;margin: auto 0;
-    z-index: 2;
-    line-height: 100%;
+    top:0;
+    margin: auto 0;
   }
 
   .thumb {
@@ -126,10 +266,28 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    right: 0;
-    top: 0;
-    margin: auto 0;
     z-index: 11;
+  }
+
+
+  .test2 {
+    position: fixed;
+    bottom: 0;
+    top:0;
+    left: 0;
+    right: 0;
+    margin: auto ;
+    width: 199px;
+  }
+
+  .thumb2 {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1111;
   }
 
   .view {
@@ -154,6 +312,7 @@
   }
 
   .public {
+    /*margin-top: -10px;*/
     width: 59px;
     height: 59px;
   }
@@ -213,14 +372,17 @@
   }
 
   .tip2 {
-    position: absolute;
-    top: 6px;
-    left: -70px;
+    position: fixed;
+    bottom: 142px;
+    right:40px;
     font-size: 11px;
-    background: #000;
-    border-radius: 12px;
-    width: 85px;
-    height: 22px;
+    color: #fff;
+    background-color: #000;
+    padding:0 30px 0px 10px;
+    text-align: left;
+    border-radius: 18px;
+    height: 34px;
+    line-height: 26px;
     z-index: 999;
   }
 

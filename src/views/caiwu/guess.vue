@@ -4,20 +4,13 @@
       <img class="test" :src="item.image_src"  :id="dolly()" />
     </div>
 
-    <div class="view" ref="mybox"s
-         v-tap="(e)=>vueTouch('点击',e)"
-         v-longtap="(e)=>vueTouch('长按',e)"
-         v-swipeleft="(e)=>vueTouch('左滑',e)"
-         v-swiperight="(e)=>vueTouch('右滑',e)"
-         v-swipeup="(e)=>vueTouch('上滑',e)"
-         v-swipedown="(e)=>vueTouch('下滑',e)">
+    <div class="view" ref="mybox" >
       <div class="header">
         <img class="back" src="@/assets/images/back.png">
         <div></div>
         <img class="public" src="@/assets/images/public.png">
       </div>
       <div class="publicLab">发布</div>
-
       <div class="bodyBtn">
         <div class="btn1">
           <img src="@/assets/images/me.png">
@@ -176,8 +169,6 @@
 ////      dolly.width = '375px'
 //      dolly.closePixelate(pixelOpts);
 
-      window.localStorage.token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
     this.getList();
 //      this.test()
     }

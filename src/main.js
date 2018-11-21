@@ -33,10 +33,12 @@ install(Vue);
 
 import "./utils/close-pixelate";
 import { ClosePixelation } from "./utils/close-pixelate";
+
 // // Vue.prototype.$ClosePixelation = ClosePixelation
 // Vue.use(ClosePixelation)
 
 import axios from "axios";
+
 Vue.prototype.$axios = axios;
 axios.defaults.baseURL = "/host";
 
