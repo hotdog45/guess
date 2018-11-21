@@ -17,7 +17,7 @@
     </div>
 
     <div v-if="sel==1" v-for="(item2,index) in list1">
-      <cell3 :item="item2"></cell3>
+      <cell :item="item2"></cell>
     </div>
 
 
@@ -29,8 +29,7 @@
   import {getPluginsGuessMyAnswer, getPluginsGuessMy} from "@/api/sigua";
 
   import cell1 from './cell1'
-  import cell2 from './cell2'
-  import cell3 from './cell3'
+  import cell from './cell3'
 
 
   var invoke = window.WebViewInvoke
@@ -39,7 +38,7 @@
     data() {
       return {
         message: "详情页11",
-        sel: 1,
+        sel: 0,
         list1: [],
         list2: [],
       };
@@ -47,8 +46,7 @@
 
     components: {
       cell1,
-      cell2,
-      cell3,
+      cell
     },
     methods: {
 

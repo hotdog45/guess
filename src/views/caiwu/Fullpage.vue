@@ -116,9 +116,6 @@
         window.WebViewInvoke.define('onMediaCallback',function(data) {
           data = data || {};
           var imgt = data.data +""
-//          window.localStorage.imgurl = imgt
-//          var imgt = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=4183927244,732328870&fm=173&app=25&f=JPEG?w=550&h=367&s=3A156984068606F5A624799C03008094";
-//          var imgt = "http://m1.jamootime.com/upload/154278953997132536.jpg"
           window.localStorage.imgurl =imgt
           if (window.localStorage.imgurl){
             that.$router.push({
@@ -126,19 +123,7 @@
             })
           }
 
-
-//          var url = window.location.href
-//          window.location.href = url+"/public";
-//          window.location.reload();
-//            setTimeout(function () {
-//              that.$router.push({
-//                path: '/public',
-//              })
-//            },1000)
         });
-
-
-
 
 
       },

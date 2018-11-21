@@ -1,8 +1,6 @@
 <template>
   <div class="bg">
     <div class="thumb">
-      <!--<img class="test" src="@/assets/images/3333.jpeg"  id="dolly" />-->
-      <!--<img class="test" :src="testimg" id="dolly"/>-->
       <img class="test" src="" alt="" crossOrigin="anonymous" id="dolly"/>
     </div>
 
@@ -12,7 +10,6 @@
         <div></div>
         <div class="publicLab" @click="postGuess">发布</div>
       </div>
-
 
       <input class="name" v-model="answer" placeholder="请准确输入猜物答案，字数不得超过5个字" type="text" maxlength="5">
       <div class="zhusi">注释：不可以加修饰类的形容词（功能类除外），<br>
@@ -27,21 +24,17 @@
   import {getPluginsGuess, getPluginsGuessAnwser} from "@/api/sigua";
   import {closePixelate} from "../../utils/close-pixelate";
   import Cookies from 'js-cookie';
-
   var pixelOpts = [{resolution: 34}];
   var invoke = window.WebViewInvoke
   var toast = invoke.bind('toast');
   var onPushScreen = invoke.bind('onPushScreen');
   var goBack = invoke.bind('goBack');
-var imgq=""
-
+  var imgq=""
   window.onload = function () {
-
     var img = document.getElementById('dolly');
     img.crossOrigin = '';
     imgq = window.localStorage.imgurl;
     img.src = imgq;
-
     toast("图片打码中...")
     img.onload = function () {
       img.closePixelate(pixelOpts);
@@ -49,22 +42,6 @@ var imgq=""
     }
 
   };
-
-//  var invoke = window.WebViewInvoke
-//  var toast = invoke.bind('toast');
-//  var img = document.getElementById('dolly');
-//  img.crossOrigin = '';
-//  function xxxxxxx() {
-//
-//    img.src = window.localStorage.imgurl;
-//    toast("图片打码中...")
-//    img.onload = function () {
-//      img.closePixelate(pixelOpts);
-//    }
-//
-//    console.log("图片==============22222222" + window.localStorage.imgurl)
-//    Cookies.set('isReload', "1", {expires: 0.002})
-//  }
 
 
   export default {
@@ -83,13 +60,10 @@ var imgq=""
       },
 
       postGuess() {
-
         if (this.answer == '' || this.answer.length < 1) {
           toast("请输入答案")
           return
         }
-
-
         var data = {
           name: this.answer,
           correct_answer: this.answer,
@@ -98,7 +72,6 @@ var imgq=""
           mosaic_level: 4,
 
         };
-
         var that = this
         getPluginsGuess(data).then(res => {
           if (res.code == 200) {

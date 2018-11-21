@@ -11,7 +11,7 @@
             <div class="intro-address" v-if="item.userInfo.location"> {{item.userInfo.location.city}}-{{item.userInfo.location.region}}</div>
           </div>
         </div>
-        <div class="join">{{item.stat.attendee_num ?item.stat.attendee_num : 0}}人参与</div>
+        <div class="join" >{{(item.stat && item.stat.attendee_num) ?item.stat.attendee_num : 0}}人参与</div>
         <div class="join">正确答案:{{item.answer}}</div>
         <div class="btn-rapper">
           <div v-if="item.is_correct" class="right-btn success">你猜对了</div>

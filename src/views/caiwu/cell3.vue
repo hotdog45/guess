@@ -1,9 +1,8 @@
 <template>
   <div>
-
     <div class="content2" v-if="item">
       <div class="right">
-        <div class="join">{{item.stat.attendee_num ?item.stat.attendee_num : 0}}人参与</div>
+        <div class="join" >{{(item.stat && item.stat.attendee_num) ?item.stat.attendee_num : 0}}人参与</div>
         <div class="join" style="font-weight: 500">正确答案:{{item.correct_answer[0]}}</div>
         <div v-if="item.state =='success'" style="color: #F85C38;font-size: 14px;padding: 5px 0 0 0">猜中者</div>
         <div class="intro" v-if="item.state =='success'">
@@ -31,35 +30,26 @@
 </template>
 
 <script>
-
   export default {
     components: {},
     data() {
       return {
-        message: "详情页",
       };
     },
 
     methods: {
       dateFormat (value) {
         var value=new Date(value);
-//        var value = "2018-11-05T21:06:46.000+0000";
         var year = value.getFullYear();
         var month = value.getMonth() + 1;
         var day = value.getDate();
-//        var hour = value.getHours();
-//        var minutes = value.getMinutes();
-//        var seconds = value.getSeconds();
         return year + '年' + month + '月' + day + '号';
       },
     },
-
     //created创建完毕状态
     created() {
     },
-
     props: ['item']
-
 
   };
 </script>
