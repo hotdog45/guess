@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="content2" v-if="item">
+    <div class="content2" v-if="item" >
       <div class="right">
         <div class="join" >{{(item.stat && item.stat.attendee_num) ?item.stat.attendee_num : 0}}人参与</div>
         <div class="join" style="font-weight: 500">正确答案:{{item.correct_answer[0]}}</div>
         <div v-if="item.state =='success'" style="color: #F85C38;font-size: 14px;padding: 5px 0 0 0">猜中者</div>
         <div class="intro" v-if="item.state =='success'">
-          <img class="avator" :src="item.avatar" alt="">
+          <img class="avator" :src="item.avatar+'?x-oss-process=image/resize,l_100'" alt="">
           <div class="intro-detail" >
             <div class="intro-name">{{item.name}}</div>
             <div class="intro-address" v-if="item.location">{{item.location.city}}-{{item.location.region}}</div>
@@ -23,7 +23,7 @@
 
       </div>
       <div class="left">
-        <img :src="item.image_src" alt="">
+        <img :src="item.image_src+'?x-oss-process=image/resize,l_100'" alt="">
       </div>
     </div>
   </div>

@@ -1,11 +1,11 @@
 <template>
-    <div class="content" v-if="item">
+    <div class="content" v-if="item" >
       <div class="left">
-        <img :src="item.image_src" alt="">
+        <img :src="item.image_src+'?x-oss-process=image/resize,l_100'" alt="">
       </div>
       <div class="right">
         <div class="intro" v-if="item.userInfo">
-          <img class="avator" :src="item.userInfo.avatar" alt="">
+          <img class="avator" :src="item.userInfo.avatar+'?x-oss-process=image/resize,l_100'" alt="">
           <div class="intro-detail">
             <div class="intro-name">{{item.userInfo.nickname}} </div>
             <div class="intro-address" v-if="item.userInfo.location"> {{item.userInfo.location.city}}-{{item.userInfo.location.region}}</div>
@@ -33,7 +33,9 @@
       };
     },
 
-    methods: {},
+    methods: {
+
+    },
 
     //created创建完毕状态
     created() {

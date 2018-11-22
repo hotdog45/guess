@@ -85,7 +85,7 @@
   export default {
     data () {
       return {
-        option: null,
+//        option: null,
         img:"http://m1.jamootime.com/guess/181004231009_153865994345547551.jpg",
         answer:'',
         show1:false,
@@ -96,7 +96,12 @@
     },
     methods: {
       back(){
-        goBack()
+        if(this.isDetail){
+          this.$router.go(-1);
+        }else {
+          goBack()
+        }
+
       },
       myguess(){
         this.$router.push({
@@ -146,9 +151,10 @@
           image: this.option.image_src,
           subTitle: "猜物",
           title: "快来猜猜",
-          topic_id: this.option.id,
-          type: "share",
+          topic_id:"http://www.oldck.com/details?id="+this.option.id,
+          type: "guess",
         });
+        //http://www.oldck.com/details?id=14
 //        var id = this.option.id;
 //        getPluginsGuessForward(id).then(res => {
 //          if (res.code == 200) {
@@ -183,7 +189,7 @@
         window.localStorage.token  = ret.token;
       }).catch();
     },
-    props: ['currentPage','option','index']
+    props: ['currentPage','option','index','isDetail']
   }
 </script>
 

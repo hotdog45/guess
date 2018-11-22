@@ -15,15 +15,17 @@ newRquest.interceptors.request.use(
   config => {
     // access token
     const { method } = config;
-    // const token = getToken();
+    const token = window.localStorage.token;
 
     if (method === "get") {
       config.params = {
-        ...config.params
+        ...config.params,
+        token
       };
     } else {
       config.data = {
-        ...config.data
+        ...config.data,
+        token
       };
     }
 

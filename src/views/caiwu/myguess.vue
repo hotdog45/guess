@@ -12,12 +12,12 @@
       <div class="btn4" v-else @click="choose(1)">我发</div>
     </div>
 
-    <div v-if="sel==0" v-for="(item,index) in list2">
-      <cell1 :item="item"></cell1>
+    <div v-if="sel==0" v-for="(item,index) in list2" @click.stop.prevent="details(index)">
+      <cell1 :item="item" ></cell1>
     </div>
 
-    <div v-if="sel==1" v-for="(item2,index) in list1">
-      <cell :item="item2"></cell>
+    <div v-if="sel==1" v-for="(item2,index) in list1"  @click.stop.prevent="details(index)">
+      <cell :item="item2" ></cell>
     </div>
 
 
@@ -53,6 +53,18 @@
       back(){
         this.$router.go(-1);
       },
+      details(num){
+        var json ;
+        if (this.sel == 0){
+          json = this.list2[num]
+        }else {
+          json = this.list1[num]
+        }
+        this.$router.push({
+          path: '/details?id='+json.id,
+        })
+      },
+
 
       choose(ind) {
         this.sel = ind;

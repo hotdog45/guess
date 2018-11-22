@@ -61,7 +61,7 @@
       Fullpage
     },
     created () {
-
+//      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTQyNDI1MDA2LCJleHAiOjE1NzM5NjEwMDZ9.o7wyenL-FuW6Foqb2_Q_YTnoFL3TO440q1cmH0fbIIE"
       getLocalUser().then(ret=>{
         window.localStorage.token  = ret.token;
       }).catch();
