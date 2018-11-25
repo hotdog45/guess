@@ -12,11 +12,13 @@
           </div>
         </div>
         <div class="join" >{{(item.stat && item.stat.attendee_num) ?item.stat.attendee_num : 0}}人参与</div>
-        <div class="join">正确答案:{{item.answer}}</div>
+        <div class="join" v-if="item.is_correct" >正确答案:{{item.answer}}</div>
+        <div class="join" v-else >你猜的答案:{{item.answer}}</div>
+
         <div class="btn-rapper">
           <div v-if="item.is_correct" class="right-btn success">你猜对了</div>
           <div v-else class="right-btn error">你猜错了</div>
-          <div v-if="item.is_correct" class="right-btn detail-talk">细聊</div>
+          <div v-if="item.is_correct" class="right-btn detail-talk" @click.stop="chat">细聊</div>
           <div v-else-if="item.state =='overdue'" class="wait">正确谜底是：{{item.answer}}</div>
           <div v-else class="wait">等待谜底揭晓</div>
         </div>
@@ -34,7 +36,20 @@
     },
 
     methods: {
-
+      chat(){
+        this.$emit('chat', this.item)
+      }
+//      chat(){
+//        var guess_owner={
+//          nickname:this.item.correctAttendee.userInfo.nickname,
+//          uid:this.item.correctAttendee.userInfo.uid
+//        }
+//        console.log(this.item.correctAttendee.id+"||||||"+JSON.stringify(this.item.correctAttendee) +"|||||||||||"+JSON.stringify(guess_owner))
+//        onConfirmChat(this.item.correctAttendee.id,this.item.correctAttendee.im_group,guess_owner).then(ret=>{
+//          //ret =  im_group 为空则创建新的返回，否则原路返回
+//          toast(ret); // 客户端应将结果缓存，避免重复创建会话
+//        }).catch();
+//      },
     },
 
     //created创建完毕状态

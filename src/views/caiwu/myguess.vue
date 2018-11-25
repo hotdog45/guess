@@ -11,16 +11,18 @@
       <div class="btn2" v-if="sel==1">我发</div>
       <div class="btn4" v-else @click="choose(1)">我发</div>
     </div>
+    <!--<div>私聊</div>-->
 
     <div v-if="sel==0" v-for="(item,index) in list2" @click.stop.prevent="details(index)">
-      <cell1 :item="item" ></cell1>
+      <cell1 :item="item" @chat="chat2"></cell1>
     </div>
 
     <div v-if="sel==1" v-for="(item2,index) in list1"  @click.stop.prevent="details(index)">
-      <cell :item="item2" ></cell>
+      <cell :item="item2" @chat="chat3"></cell>
     </div>
 
 
+    <div style="height: 44px"></div>
   </div>
 </template>
 
@@ -34,6 +36,7 @@
 
   var invoke = window.WebViewInvoke
   var toast = invoke.bind('toast');
+  var onConfirmChat = window.WebViewInvoke.bind('onConfirmChat');
   export default {
     data() {
       return {
@@ -49,6 +52,36 @@
       cell
     },
     methods: {
+      chat3(data){
+        var item = data
+        console.log(JSON.stringify(item))
+        var guess_owner={
+          nickname:item.correctAttendee.userInfo.nickname,
+          uid:item.correctAttendee.userInfo.uid
+        }
+        console.log(item.correctAttendee.id+"||||||"+JSON.stringify(item.correctAttendee) +"|||||||||||"+JSON.stringify(guess_owner))
+        onConfirmChat(item.correctAttendee.id,item.correctAttendee.im_group ? item.correctAttendee.im_group :"",guess_owner).then(ret=>{
+//          toast(ret);
+          console.log(ret)
+          this.getList1()
+          this.getList2()
+        }).catch();
+      },
+      chat2(data){
+        var item = data
+        console.log("test"+JSON.stringify(item))
+        var guess_owner={
+          nickname:item.userInfo.nickname,
+          uid:item.userInfo.uid
+        }
+        console.log(item.id+"||||||"+JSON.stringify(item.correctAttendee) +"|||||||||||"+JSON.stringify(guess_owner))
+        onConfirmChat(item.id,item.im_group ,guess_owner).then(ret=>{
+//          toast(ret);
+          console.log(ret)
+          this.getList1()
+          this.getList2()
+        }).catch();
+      },
 
       back(){
         this.$router.go(-1);

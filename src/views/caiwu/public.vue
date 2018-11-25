@@ -24,21 +24,25 @@
   import {getPluginsGuess, getPluginsGuessAnwser} from "@/api/sigua";
   import {closePixelate} from "../../utils/close-pixelate";
   import Cookies from 'js-cookie';
-  var pixelOpts = [{resolution: 34}];
+  var pixelOpts = [{resolution: 32}];
   var invoke = window.WebViewInvoke
   var toast = invoke.bind('toast');
   var onPushScreen = invoke.bind('onPushScreen');
   var goBack = invoke.bind('goBack');
-  var imgq=""
+  var imgq = ""
   window.onload = function () {
+    toast("图片打码中...")
     var img = document.getElementById('dolly');
     img.crossOrigin = '';
     imgq = window.localStorage.imgurl;
-    img.src = imgq;
-    toast("图片打码中...")
+    console.log("imgq"+imgq);
+    var img750 = window.localStorage.imgurl+'?x-oss-process=image/resize,w_750';
+    img.src = img750
+    console.log("img750"+img750);
+//    img.src = imgq;
     img.onload = function () {
       img.closePixelate(pixelOpts);
-      Cookies.set('isReload', "1", {expires: 0.002})
+      Cookies.set('isReload', "1", {expires: 0.0002})
     }
 
   };
@@ -72,12 +76,16 @@
           mosaic_level: 4,
 
         };
+        Cookies.set('isReload', "1", {expires: 0.0002})
         var that = this
         getPluginsGuess(data).then(res => {
           if (res.code == 200) {
             toast("发布成功\n为确保猜物的真实合规\n你的物件已发送至芥摩\n后台审核，审核通过后\n会立即开始猜物。");
-            window.localStorage.removeItem("imgurl");
-            that.$router.go(-1);
+            setTimeout(function () {
+              that.answer = ""
+              window.localStorage.removeItem("imgurl");
+              that.$router.go(-1);
+            }, 1000)
           } else if (res.code == 1004) {
             onPushScreen({page: 'Pages/My/NameConfirmPower', params: {}});
           } else {
@@ -91,7 +99,7 @@
 
     beforeCreate(){
       if (Cookies.get('isReload') != "100") {
-        Cookies.set('isReload', "100", {expires: 0.002})
+        Cookies.set('isReload', "100", {expires: 0.0002})
         window.location.reload();
       }
     },
@@ -104,12 +112,6 @@
 //        Cookies.set('isReload', "100", {expires: 0.002})
 //        window.location.reload();
 //      }
-
-
-
-
-
-
 
 
 //      var imgt = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=4183927244,732328870&fm=173&app=25&f=JPEG?w=550&h=367&s=3A156984068606F5A624799C03008094";
@@ -127,7 +129,6 @@
 //      console.log("data=============2222222" + window.localStorage.imgurl)
 //      toast("data=============2222222" + window.localStorage.imgurl);
 //      window.localStorage.imgurl = imgt
-
 
 
 //      var that = this
@@ -230,14 +231,13 @@
   }
 
   .name {
-    z-index: 1000;
+    z-index: 1002;
     position: fixed;
     bottom: 120px;
     left: 27px;
     width: 324px;
     padding: 0 16px;
-    text-align: center;
-
+    /*text-align: center;*/
     line-height: 43px;
     border-radius: 22px;
     border: none;

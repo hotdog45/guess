@@ -58,9 +58,9 @@ newRquest.defaults.headers.get["Content-Type"] = "application/json";
 //   newRquest.defaults.headers.get["token"] = token;
 //   newRquest.defaults.headers.post["token"] = token;
 // } else {
-newRquest.defaults.headers.get["token"] =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU"
-newRquest.defaults.headers.post["token"] =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
+// newRquest.defaults.headers.get["token"] =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU"
+// newRquest.defaults.headers.post["token"] =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTg4LCJpYXQiOjE1NDIyOTYyODIsImV4cCI6MTU3MzgzMjI4Mn0.bYm01K1MLi-cp1w91PkG8m2ySa5jAgZWvwr0dcwJNQU";
 // }
 export default newRquest;

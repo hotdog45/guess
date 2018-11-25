@@ -4,20 +4,22 @@
       <div class="right">
         <div class="join" >{{(item.stat && item.stat.attendee_num) ?item.stat.attendee_num : 0}}人参与</div>
         <div class="join" style="font-weight: 500">正确答案:{{item.correct_answer[0]}}</div>
-        <div v-if="item.state =='success'" style="color: #F85C38;font-size: 14px;padding: 5px 0 0 0">猜中者</div>
-        <div class="intro" v-if="item.state =='success'">
-          <img class="avator" :src="item.avatar+'?x-oss-process=image/resize,l_100'" alt="">
-          <div class="intro-detail" >
-            <div class="intro-name">{{item.name}}</div>
-            <div class="intro-address" v-if="item.location">{{item.location.city}}-{{item.location.region}}</div>
+        <div v-if="item.state =='success' && item.correctAttendee" style="color: #F85C38;font-size: 14px;padding: 5px 0 0 0">猜中者</div>
+        <div class="intro" v-if="item.state =='success' && item.correctAttendee">
+          <img class="avator" :src="item.correctAttendee.userInfo.avatar+'?x-oss-process=image/resize,l_100'" alt="">
+          <div class="intro-detail" v-if="item.correctAttendee.userInfo">
+            <div class="intro-name">{{item.correctAttendee.userInfo.name}}</div>
+            <div class="intro-address" v-if="item.correctAttendee.userInfo.location">{{item.correctAttendee.userInfo.location.city}}-{{item.correctAttendee.userInfo.location.region}}</div>
           </div>
         </div>
         <div class="temp">
 
         </div>
-        <div v-if="item.state =='success'" class="right-btn detail-talk">细聊</div>
+        <div v-if="item.state =='success'" class="right-btn detail-talk" @click.stop="chat">细聊</div>
         <div v-else-if="item.state =='overdue'" class="right-btn error">已结束，没人猜中</div>
-        <div v-else-if="!item.is_approved" class="right-btn error">审核未通过</div>
+        <div v-else-if="item.state =='watting'" class="right-btn error">审核中</div>
+        <div v-else-if="item.state =='overdue'" class="right-btn error">已过期</div>
+        <div v-else-if="item.state =='rejected'" class="right-btn error">审核未通过</div>
         <div v-else-if="item.state =='inprogress'" >截止竞猜日期<br>
           {{dateFormat(item.last_update)}}</div>
 
@@ -30,6 +32,8 @@
 </template>
 
 <script>
+  var onConfirmChat = window.WebViewInvoke.bind('onConfirmChat');
+  var toast = window.WebViewInvoke.bind('toast');
   export default {
     components: {},
     data() {
@@ -38,6 +42,18 @@
     },
 
     methods: {
+      chat(){
+        this.$emit('chat',this.item)
+//        var guess_owner={
+//          nickname:this.item.correctAttendee.userInfo.nickname,
+//          uid:this.item.correctAttendee.userInfo.uid
+//        }
+//        console.log(this.item.correctAttendee.id+"||||||"+JSON.stringify(this.item.correctAttendee) +"|||||||||||"+JSON.stringify(guess_owner))
+//        onConfirmChat(this.item.correctAttendee.id,this.item.correctAttendee.im_group,guess_owner).then(ret=>{
+//          //ret =  im_group 为空则创建新的返回，否则原路返回
+//          toast(ret); // 客户端应将结果缓存，避免重复创建会话
+//        }).catch();
+      },
       dateFormat (value) {
         var value=new Date(value);
         var year = value.getFullYear();

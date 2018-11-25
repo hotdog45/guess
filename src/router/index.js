@@ -16,7 +16,6 @@ export const constantRouterMap = [
 
 export default new Router({
   mode: "history",
-  // base: "guess",
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 });

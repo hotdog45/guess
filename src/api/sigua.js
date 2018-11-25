@@ -11,8 +11,8 @@ export function getPluginsGuessDesc(id) {
 }
 
 //获取猜物列表
-export function getPluginsGuessList(params) {
-  return request.get("plugins/guess");
+export function getPluginsGuessList(page) {
+  return request.get("plugins/guess?page="+page);
 }
 
 //提交猜物答案

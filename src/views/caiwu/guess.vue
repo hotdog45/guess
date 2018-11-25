@@ -1,9 +1,11 @@
 <template>
   <div id="test" >
     <div v-for="(item,index) in data" >
-      <Fullpage :currentPage='currentPage' :option="item" :index = "index">
+      <Fullpage :currentPage='currentPage' :option="item" :index = "index" :isDetail = "false">
       </Fullpage>
+
     </div>
+
 
   </div>
 </template>
@@ -53,7 +55,9 @@
         startY: '',
         endX: '',
         endY: '',
+        data1:{},
         data:[],
+        page:1,
 
       }
     },
@@ -61,13 +65,15 @@
       Fullpage
     },
     created () {
-//      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTQyNDI1MDA2LCJleHAiOjE1NzM5NjEwMDZ9.o7wyenL-FuW6Foqb2_Q_YTnoFL3TO440q1cmH0fbIIE"
+      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTQyNDI1MDA2LCJleHAiOjE1NzM5NjEwMDZ9.o7wyenL-FuW6Foqb2_Q_YTnoFL3TO440q1cmH0fbIIE"
       getLocalUser().then(ret=>{
+        console.log("ret======="+JSON.stringify(ret))
         window.localStorage.token  = ret.token;
+        console.log(window.localStorage.token)
       }).catch();
 
       this.touchListener()
-      this.getList()
+      this.getList("1")
     },
     methods: {
 
@@ -83,34 +89,49 @@
           if (direction === 1) {
             if (this.currentPage < this.data.length-1) {
               this.currentPage ++
-            }//向上
+            }else {
+              this.page = this.data1.page+1
+              this.getList(this.page)
+            }
+//            if (this.data.length == this.currentPage){
+//              this.page = this.data1.page+1
+//              this.getList(this.page)
+//            }
           } else if ( direction ===2 ) {//向下
             if (this.currentPage >= 2) {
               this.currentPage --
             }
+
+
           }
         })
       },
 
-      getList() {
+      getList(page) {
 
-        var data = {
-          token:window.localStorage.token,
-        }
 
-        getPluginsGuessList(data).then(res => {
+        getPluginsGuessList(page).then(res => {
           if (res.code == 200) {
-            this.data = res.data.records
+            this.data1 = res.data
+            if (this.data.length >1){
+              res.data.records.forEach((record, index) => {
+                this.data.push(record)
+              });
+            }else {
+              this.data = res.data.records
+            }
+
             this.$children.forEach((child, index) => {
               if (child.option === null) {
                 let childOption = this.data[index];
-                this.$set(childOption, 'index', index + 1);
+                this.$set(childOption, 'index', index +1);
                 console.log(childOption+"....")
                 child.option = childOption;
               }
             });
           } else {
-            alert("请求失败,稍后重试!");
+
+//            alert("请求失败,稍后重试!");
           }
         });
       },
@@ -126,7 +147,7 @@
         // 动态设置各个page内的options
         if (child.option === null) {
           let childOption = this.data[index];
-          this.$set(childOption, 'index', index + 1);
+          this.$set(childOption, 'index', index +1);
           console.log(childOption+"....")
           child.option = childOption;
         }

@@ -2,9 +2,10 @@
 * Created by lishunfeng on 2018/11/16.
 */
 <template>
-  <div class="full-page" v-if="option" :class="{'page-before': index < currentPage,
+  <div class="full-page" v-if="option" :class="{ 'page-before': index < currentPage,
 'page-after': index > currentPage,
   'page-current': index === currentPage}" >
+
     <div class="thumb" >
       <img class="test" :src="option.image_src"  />
     </div>
@@ -31,7 +32,7 @@
           <div>{{option.stat ?option.stat.forward:'0'}}</div>
         </div>
         <div class="tipdiv" >
-          <div class="tip2" style="text-align: left;" v-if="show2">{{option.correct_answer[0].length}}个字</div>
+          <div class="tip2" style="text-align: left;" v-if="show2">{{option.name.length}}个字</div>
           <img style="width: 37px;height: 37px;" src="@/assets/images/icon2.png">
           <div class="tip" style="color:#000;font-size=11px;" @click="showclick2">提示</div>
 
@@ -53,7 +54,7 @@
       </div>
     </div>
     <div class="roleDesc" @click="showclick" v-if="show1">
-      <div>
+      <div class="roleDesc2">
         <div style="text-align: center;margin-top: 20px;">猜物规则</div>
         <div style="display: flex;flex-direction: column;padding: 7px 8px 0 11px">
             <div class="roletext"><span class="rolep">+&nbsp;</span>每天一人最多猜5次,若次数已满，需发布一
@@ -72,20 +73,15 @@
   import {getPluginsGuessList, getPluginsGuessAnwser,
     getPluginsGuessForward} from "@/api/sigua";
 
-//  import invoke from 'react-native-webview-bridge'
-//  import invoke from 'react-native-webview-invoke/browser'
-
   var invoke = window.WebViewInvoke
   var toast = invoke.bind('toast');
   var onPushScreen = invoke.bind('onPushScreen');
   var goBack = invoke.bind('goBack');
   var forward = window.WebViewInvoke.bind('forward');
   var getLocalUser = window.WebViewInvoke.bind('getLocalUser');
-
   export default {
     data () {
       return {
-//        option: null,
         img:"http://m1.jamootime.com/guess/181004231009_153865994345547551.jpg",
         answer:'',
         show1:false,
@@ -95,6 +91,7 @@
       }
     },
     methods: {
+
       back(){
         if(this.isDetail){
           this.$router.go(-1);
@@ -109,7 +106,10 @@
         })
       },
       publicGuess(){
-
+        if (this.user.mobile ==null || this.user.mobile.length <4){
+          onPushScreen({page: 'Pages/My/AssociationPhone', params: {}});
+          return
+        }
         onPushScreen({
           page: 'Pages/MediaFullScreen', params: {
             from: 'GUESS',
@@ -151,7 +151,8 @@
           image: this.option.image_src,
           subTitle: "猜物",
           title: "快来猜猜",
-          topic_id:"http://www.oldck.com/details?id="+this.option.id,
+          url:"http://www.oldck.com/details?id="+this.option.id,
+          topic_id:this.option.id,
           type: "guess",
         });
         //http://www.oldck.com/details?id=14
@@ -166,17 +167,28 @@
       },
 
       postAnwser() {
+        if (this.user.mobile ==null || this.user.mobile.length <4){
+          onPushScreen({page: 'Pages/My/AssociationPhone', params: {}});
+          return
+        }
+
+        if (this.answer == "" || this.answer.length <1){
+          toast('请输入答案!');
+          return
+        }
         var data = {
           answer: this.answer
         };
         var id = this.option.id;
         getPluginsGuessAnwser(id, data).then(res => {
           if (res.code == 200) {
-            if(res.data.is_corret){
+            if(res.data.is_correct){
               this.show2 = true
             }else {
               toast('和答案就差一点点\n再猜猜其他的吧');
             }
+          } else if (res.code == 7001) {
+            toast('今日猜物次数已满\n立即发布猜物\n换取5次猜物机会');
           } else {
             toast(res.msg);
           }
@@ -185,7 +197,7 @@
     },
     created () {
       getLocalUser().then(ret=>{
-        user = ret
+        this.user = ret
         window.localStorage.token  = ret.token;
       }).catch();
     },
@@ -195,7 +207,7 @@
 
 <style scoped>
 
-  .roleDesc{
+  .roleDesc2{
     z-index: 1010;
     position: fixed;
     background: rgba(0, 0, 0, 0.8);
@@ -207,6 +219,16 @@
     border-top-right-radius: 20px;
     color: #fff;
     font-size: 15px;
+  }
+
+  .roleDesc{
+    z-index: 1009;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.1);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 
 
@@ -241,6 +263,7 @@
     z-index: 0;
     transform: translate3d(0, 100%, 0);
   }
+
 
 
   .test {
