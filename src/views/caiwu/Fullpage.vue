@@ -47,9 +47,7 @@
 
         </div>
         <marquee class="desc" width=90% direction=left align=middle>
-          <div v-for="(item,index) in option.answers">
-            <div v-if="item.userInfo != null">@{{item.userInfo == null ?"":item.userInfo.nickname}}: <span>{{item == null ?"":item.answer}}</span></div>
-          </div>
+              <span v-for="(item,index) in option.answers">@{{item.userInfo == null ?"":item.userInfo.nickname}}:&nbsp;{{item == null ?"":item.answer}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         </marquee>
       </div>
     </div>
@@ -134,7 +132,19 @@
       },
       show3click(){
         this.show3 = false
-
+        var item = option
+        console.log("test"+JSON.stringify(item))
+        var guess_owner={
+          nickname:item.userInfo.nickname,
+          uid:item.userInfo.uid
+        }
+//        console.log(item.id+"||||||"+JSON.stringify(item.correctAttendee) +"|||||||||||"+JSON.stringify(guess_owner))
+        onConfirmChat(item.id,item.im_group ,guess_owner).then(ret=>{
+//          toast(ret);
+          console.log(ret)
+          this.getList1(1)
+          this.getList2(1)
+        }).catch();
       },
 
       showclick(){
@@ -151,7 +161,7 @@
           image: this.option.image_src,
           subTitle: "猜物",
           title: "快来猜猜",
-          url:"http://www.oldck.com/details?id="+this.option.id,
+          url:"http://guess.efet.top/details?id="+this.option.id,
           topic_id:this.option.id,
           type: "guess",
         });
@@ -180,15 +190,14 @@
           answer: this.answer
         };
         var id = this.option.id;
+        this.answer = ""
         getPluginsGuessAnwser(id, data).then(res => {
           if (res.code == 200) {
             if(res.data.is_correct){
-              this.show2 = true
+              this.show3 = true
             }else {
               toast('和答案就差一点点\n再猜猜其他的吧');
             }
-          } else if (res.code == 7001) {
-            toast('今日猜物次数已满\n立即发布猜物\n换取5次猜物机会');
           } else {
             toast(res.msg);
           }

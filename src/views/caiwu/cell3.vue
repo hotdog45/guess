@@ -56,6 +56,7 @@
       },
       dateFormat (value) {
         var value=new Date(value);
+        value.setDate(value.getDate()+14)
         var year = value.getFullYear();
         var month = value.getMonth() + 1;
         var day = value.getDate();

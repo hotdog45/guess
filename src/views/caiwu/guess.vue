@@ -65,7 +65,7 @@
       Fullpage
     },
     created () {
-      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNTQyNDI1MDA2LCJleHAiOjE1NzM5NjEwMDZ9.o7wyenL-FuW6Foqb2_Q_YTnoFL3TO440q1cmH0fbIIE"
+      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTU0MzM4ODU5OCwiZXhwIjoxNTc0OTI0NTk4fQ.4MdHwDRbSa4eyZn5kbDqxsJS0zmHA94KLQG2O_KzwyM"
       getLocalUser().then(ret=>{
         console.log("ret======="+JSON.stringify(ret))
         window.localStorage.token  = ret.token;
@@ -93,23 +93,16 @@
               this.page = this.data1.page+1
               this.getList(this.page)
             }
-//            if (this.data.length == this.currentPage){
-//              this.page = this.data1.page+1
-//              this.getList(this.page)
-//            }
           } else if ( direction ===2 ) {//向下
             if (this.currentPage >= 2) {
               this.currentPage --
             }
-
 
           }
         })
       },
 
       getList(page) {
-
-
         getPluginsGuessList(page).then(res => {
           if (res.code == 200) {
             this.data1 = res.data
@@ -130,7 +123,6 @@
               }
             });
           } else {
-
 //            alert("请求失败,稍后重试!");
           }
         });

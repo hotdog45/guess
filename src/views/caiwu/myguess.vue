@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--{{message}}-->
-    <div class="top-bar">我的猜物
+    <div class="top-bar" @click="top">我的猜物
       <div class="img-rapper"><img @click="back" class='back' src="@/assets/images/back2.png" alt=""></div>
     </div>
 
@@ -42,6 +42,8 @@
       return {
         message: "详情页11",
         sel: 0,
+        data1:{},
+        data2:{},
         list1: [],
         list2: [],
       };
@@ -52,6 +54,9 @@
       cell
     },
     methods: {
+      top(){
+        window.scrollTo(0,0);
+      },
       chat3(data){
         var item = data
         console.log(JSON.stringify(item))
@@ -63,8 +68,8 @@
         onConfirmChat(item.correctAttendee.id,item.correctAttendee.im_group ? item.correctAttendee.im_group :"",guess_owner).then(ret=>{
 //          toast(ret);
           console.log(ret)
-          this.getList1()
-          this.getList2()
+          this.getList1(1)
+          this.getList2(1)
         }).catch();
       },
       chat2(data){
@@ -78,8 +83,8 @@
         onConfirmChat(item.id,item.im_group ,guess_owner).then(ret=>{
 //          toast(ret);
           console.log(ret)
-          this.getList1()
-          this.getList2()
+          this.getList1(1)
+          this.getList2(1)
         }).catch();
       },
 
@@ -103,27 +108,44 @@
         this.sel = ind;
       },
       //我发
-      getList1() {
-        var data = {
-          page: "1",
-          total: "20"
-        };
-        getPluginsGuessMy(data).then(res => {
+      getList1(page) {
+        getPluginsGuessMy(page).then(res => {
           if (res.code == 200) {
-            this.list1 = res.data.records
+            this.data1 = res.data
+            if (this.data1.records.length >0){
+              this.getList1(this.data1.page + 1)
+              if (this.list1.length >1){
+                this.data1.records.forEach((record, index) => {
+                  this.list1.push(record)
+                });
+              }else {
+                this.list1 = res.data.records
+              }
+            }else {
+              //没有更多
+            }
           } else {
             toast(res.msg);
           }
         });
       },
-      getList2() {
-        var data = {
-          page: "1",
-          total: "20"
-        };
-        getPluginsGuessMyAnswer(data).then(res => {
+      getList2(page) {
+        getPluginsGuessMyAnswer(page).then(res => {
           if (res.code == 200) {
-            this.list2 = res.data.records
+//            this.list2 = res.data.records
+            this.data2 = res.data
+            if (this.data2.records.length >0){
+              this.getList1(this.data2.page + 1)
+              if (this.list2.length >1){
+                this.data2.records.forEach((record, index) => {
+                  this.list2.push(record)
+                });
+              }else {
+                this.list2 = res.data.records
+              }
+            }else {
+              //没有更多
+            }
           } else {
             toast(res.msg);
           }
@@ -134,8 +156,8 @@
 
     //created创建完毕状态
     created() {
-      this.getList1()
-      this.getList2()
+      this.getList1(1)
+      this.getList2(1)
 
     },
   };

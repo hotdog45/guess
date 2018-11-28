@@ -30,16 +30,16 @@ export function getPluginsMyCount(params) {
   return request.get("plugins/guess/my_count", params);
 }
 
-//获取猜物答案列表
-export function getPluginsGuessMy(params) {
-  return request.get("plugins/guess/my_guess", params);
+// 获取猜物答案列表
+export function getPluginsGuessMy(page) {
+  return request.get("plugins/guess/my_guess?page="+page);
 }
 // 获取我的猜物答案列表
-export function getPluginsGuessMyAnswer(params) {
-  return request.get("plugins/guess/my_answer", params);
+export function getPluginsGuessMyAnswer(page) {
+  return request.get("plugins/guess/my_answer?page="+page);
 }
 
-//转发猜物
+// 转发猜物
 export function getPluginsGuessForward(id) {
   return request.post("plugins/guess/" + id + "/forward");
 }
