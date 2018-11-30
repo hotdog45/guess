@@ -106,24 +106,25 @@
 
       choose(ind) {
         this.sel = ind;
+        this.getList1(1)
       },
       //我发
       getList1(page) {
         getPluginsGuessMy(page).then(res => {
           if (res.code == 200) {
-            this.data1 = res.data
-            if (this.data1.records.length >0){
-              this.getList1(this.data1.page + 1)
-              if (this.list1.length >1){
-                this.data1.records.forEach((record, index) => {
-                  this.list1.push(record)
-                });
-              }else {
+//            this.data1 = res.data
+//            if (this.data1.records.length >0){
+//              this.getList1(this.data1.page + 1)
+//              if (this.list1.length >1){
+//                this.data1.records.forEach((record, index) => {
+//                  this.list1.push(record)
+//                });
+//              }else {
                 this.list1 = res.data.records
-              }
-            }else {
-              //没有更多
-            }
+//              }
+//            }else {
+//              //没有更多
+//            }
           } else {
             toast(res.msg);
           }
@@ -133,19 +134,19 @@
         getPluginsGuessMyAnswer(page).then(res => {
           if (res.code == 200) {
 //            this.list2 = res.data.records
-            this.data2 = res.data
-            if (this.data2.records.length >0){
-              this.getList1(this.data2.page + 1)
-              if (this.list2.length >1){
-                this.data2.records.forEach((record, index) => {
-                  this.list2.push(record)
-                });
-              }else {
+//            this.data2 = res.data
+//            if (this.data2.records.length >0){
+//              this.getList1(this.data2.page + 1)
+//              if (this.list2.length >1){
+//                this.data2.records.forEach((record, index) => {
+//                  this.list2.push(record)
+//                });
+//              }else {
                 this.list2 = res.data.records
-              }
-            }else {
-              //没有更多
-            }
+//              }
+//            }else {
+//              //没有更多
+//            }
           } else {
             toast(res.msg);
           }
@@ -156,7 +157,7 @@
 
     //created创建完毕状态
     created() {
-      this.getList1(1)
+
       this.getList2(1)
 
     },

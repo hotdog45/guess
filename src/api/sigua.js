@@ -1,4 +1,7 @@
 import request from "./request";
+import axios from 'axios';
+let headers1 = {headers: {'Content-Type':'application/json;','token':window.localStorage.token}}
+let base = '/api/v1';
 
 //创建猜物
 export function getPluginsGuess( params) {
@@ -12,8 +15,14 @@ export function getPluginsGuessDesc(id) {
 
 //获取猜物列表
 export function getPluginsGuessList(page) {
-  return request.get("plugins/guess?page="+page);
+  return axios.get(`${base}/plugins/guess?page_size=200&page=`+page+`&state=inprogress`,headers1)
+    .then(res => res.data);
 }
+
+
+// export const getPluginsGuessList = page => {
+//   return axios.get(`${base}/plugins/guess?page=`+page,headers1)
+//     .then(res => res.data); };
 
 //提交猜物答案
 export function getPluginsGuessAnwser(id, params) {
@@ -32,11 +41,14 @@ export function getPluginsMyCount(params) {
 
 // 获取猜物答案列表
 export function getPluginsGuessMy(page) {
-  return request.get("plugins/guess/my_guess?page="+page);
+  return axios.get(`${base}/plugins/guess/my_guess?page_size=200&page=`+page,headers1)
+    .then(res => res.data);
 }
 // 获取我的猜物答案列表
 export function getPluginsGuessMyAnswer(page) {
-  return request.get("plugins/guess/my_answer?page="+page);
+  // return request.get("plugins/guess/my_answer?page_size=200&page="+page);
+  return axios.get(`${base}/plugins/guess/my_answer?page_size=200&page=`+page,headers1)
+    .then(res => res.data);
 }
 
 // 转发猜物

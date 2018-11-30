@@ -7,7 +7,9 @@
   'page-current': index === currentPage}" >
 
     <div class="thumb" >
-      <img class="test" :src="option.image_src"  />
+      <img class="test" v-if="option.state =='overdue' ||option.state =='success' "  :src="option.image_ori_src" alt="">
+      <img class="test" v-else  :src="option.image_src" alt="">
+      <!--<img class="test" :src="option.image_src"  />-->
     </div>
 
     <div class="thumb2" v-if="show3">
@@ -77,6 +79,7 @@
   var goBack = invoke.bind('goBack');
   var forward = window.WebViewInvoke.bind('forward');
   var getLocalUser = window.WebViewInvoke.bind('getLocalUser');
+  var onConfirmChat = window.WebViewInvoke.bind('onConfirmChat');
   export default {
     data () {
       return {
@@ -132,18 +135,16 @@
       },
       show3click(){
         this.show3 = false
-        var item = option
-        console.log("test"+JSON.stringify(item))
+        var item = this.option
+        console.log("test::"+JSON.stringify(item))
         var guess_owner={
-          nickname:item.userInfo.nickname,
-          uid:item.userInfo.uid
+          nickname:item.nickname,
+          uid:item.uid
         }
-//        console.log(item.id+"||||||"+JSON.stringify(item.correctAttendee) +"|||||||||||"+JSON.stringify(guess_owner))
+        console.log("item.id::"+item.id+"item.im_group::"+item.im_group+"guess_owner::"+guess_owner)
         onConfirmChat(item.id,item.im_group ,guess_owner).then(ret=>{
 //          toast(ret);
           console.log(ret)
-          this.getList1(1)
-          this.getList2(1)
         }).catch();
       },
 
@@ -160,7 +161,7 @@
           avatar: this.user.avatar,
           image: this.option.image_src,
           subTitle: "猜物",
-          title: "快来猜猜",
+          title: "这是什么？猜中拿走，你就是芥摩锦鲤！",
           url:"http://guess.efet.top/details?id="+this.option.id,
           topic_id:this.option.id,
           type: "guess",

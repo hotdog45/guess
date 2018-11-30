@@ -10,6 +10,7 @@ export const constantRouterMap = [
   { path: "/guess", component: asyncImport("caiwu/guess") },
   { path: "/public", component: asyncImport("caiwu/public") },
   { path: "/details", component: asyncImport("caiwu/details") },
+  { path: "/test", component: asyncImport("caiwu/test") },
 
   { path: "*", redirect: "/404", hidden: true }
 ];

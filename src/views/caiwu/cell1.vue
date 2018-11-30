@@ -1,7 +1,9 @@
 <template>
     <div class="content" v-if="item" >
       <div class="left">
-        <img :src="item.image_src+'?x-oss-process=image/resize,l_100'" alt="">
+
+        <img v-if="(item.state =='overdue' ||item.state =='success') && item.image_ori_src"  :src="item.image_ori_src+'?x-oss-process=image/resize,l_200'" alt="">
+        <img v-else :src="item.image_src+'?x-oss-process=image/resize,l_200'" alt="">
       </div>
       <div class="right">
         <div class="intro" v-if="item.userInfo">

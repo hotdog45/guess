@@ -103,6 +103,7 @@
       },
 
       getList(page) {
+
         getPluginsGuessList(page).then(res => {
           if (res.code == 200) {
             this.data1 = res.data

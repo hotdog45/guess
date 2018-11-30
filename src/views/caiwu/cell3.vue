@@ -6,7 +6,7 @@
         <div class="join" style="font-weight: 500">正确答案:{{item.correct_answer[0]}}</div>
         <div v-if="item.state =='success' && item.correctAttendee" style="color: #F85C38;font-size: 14px;padding: 5px 0 0 0">猜中者</div>
         <div class="intro" v-if="item.state =='success' && item.correctAttendee">
-          <img class="avator" :src="item.correctAttendee.userInfo.avatar+'?x-oss-process=image/resize,l_100'" alt="">
+          <img class="avator" :src="item.correctAttendee.userInfo.avatar+'?x-oss-process=image/resize,l_00'" alt="">
           <div class="intro-detail" v-if="item.correctAttendee.userInfo">
             <div class="intro-name">{{item.correctAttendee.userInfo.name}}</div>
             <div class="intro-address" v-if="item.correctAttendee.userInfo.location">{{item.correctAttendee.userInfo.location.city}}-{{item.correctAttendee.userInfo.location.region}}</div>
@@ -25,7 +25,8 @@
 
       </div>
       <div class="left">
-        <img :src="item.image_src+'?x-oss-process=image/resize,l_100'" alt="">
+        <img v-if="item.state =='overdue' ||item.state =='success' "  :src="item.image_ori_src+'?x-oss-process=image/resize,l_200'" alt="">
+        <img v-else :src="item.image_src+'?x-oss-process=image/resize,l_200'" alt="">
       </div>
     </div>
   </div>
