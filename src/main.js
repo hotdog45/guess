@@ -25,8 +25,11 @@ FastClick.attach(document.body);
 
 import * as filter from "./filter"; // global filters
 import "./utils/bridge";
+import brower from  "./utils/brower";
+Vue.use(brower)
 import touch from "./utils/swipe";
 Vue.use(touch)
+
 // components
 import { install } from "./components/index"; // all global components
 install(Vue);
@@ -34,20 +37,19 @@ install(Vue);
 import "./utils/close-pixelate";
 import { ClosePixelation } from "./utils/close-pixelate";
 
-// // Vue.prototype.$ClosePixelation = ClosePixelation
-// Vue.use(ClosePixelation)
+
 
 import axios from "axios";
 
 Vue.prototype.$axios = axios;
 axios.defaults.baseURL = "/host";
 
-// register global utility filters.
+
 Object.keys(filter).forEach(key => {
   Vue.filter(key, filter[key]);
 });
 // vsconsole
-const DEBUG = true;
+const DEBUG = false;
 // false 绿色的按钮消失
 if (DEBUG) {
   const vconsole = new VConsole();

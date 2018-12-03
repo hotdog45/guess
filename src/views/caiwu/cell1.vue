@@ -21,7 +21,7 @@
           <div v-if="item.is_correct" class="right-btn success">你猜对了</div>
           <div v-else class="right-btn error">你猜错了</div>
           <div v-if="item.is_correct" class="right-btn detail-talk" @click.stop="chat">细聊</div>
-          <div v-else-if="item.state =='overdue'" class="wait">正确谜底是：{{item.answer}}</div>
+          <div v-else-if="item.state =='overdue' || item.state =='success'" class="wait">正确谜底是：{{item.answer}}</div>
           <div v-else class="wait">等待谜底揭晓</div>
         </div>
       </div>

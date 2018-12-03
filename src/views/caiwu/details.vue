@@ -29,6 +29,9 @@
     created () {
 
       this.getdata()
+
+
+
     },
     methods: {
 

@@ -65,7 +65,7 @@
       Fullpage
     },
     created () {
-      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTU0MzM4ODU5OCwiZXhwIjoxNTc0OTI0NTk4fQ.4MdHwDRbSa4eyZn5kbDqxsJS0zmHA94KLQG2O_KzwyM"
+      // window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTU0MzM4ODU5OCwiZXhwIjoxNTc0OTI0NTk4fQ.4MdHwDRbSa4eyZn5kbDqxsJS0zmHA94KLQG2O_KzwyM"
       getLocalUser().then(ret=>{
         console.log("ret======="+JSON.stringify(ret))
         window.localStorage.token  = ret.token;

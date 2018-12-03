@@ -68,6 +68,10 @@
           toast("请输入答案")
           return
         }
+        if ( this.answer.length > 5) {
+          toast("答案不能超过五个字")
+          return
+        }
         var data = {
           name: this.answer,
           correct_answer: this.answer,

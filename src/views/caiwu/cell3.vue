@@ -17,7 +17,7 @@
         </div>
         <div v-if="item.state =='success'" class="right-btn detail-talk" @click.stop="chat">细聊</div>
         <div v-else-if="item.state =='overdue'" class="right-btn error">已结束，没人猜中</div>
-        <div v-else-if="item.state =='watting'" class="right-btn error">审核中</div>
+        <div v-else-if="item.state =='waitting'" class="right-btn error">审核中</div>
         <div v-else-if="item.state =='overdue'" class="right-btn error">已过期</div>
         <div v-else-if="item.state =='rejected'" class="right-btn error">审核未通过</div>
         <div v-else-if="item.state =='inprogress'" >截止竞猜日期<br>
