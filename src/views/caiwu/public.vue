@@ -8,7 +8,8 @@
       <div class="header">
         <img class="back" @click="back" src="@/assets/images/back.png">
         <div></div>
-        <div class="publicLab" @click="postGuess">发布</div>
+        <div v-if="test2" class="publicLab" @click="postGuess">发布</div>
+        <div v-else class="publicLab" @click="">发布</div>
       </div>
 
       <input class="name" v-model="answer" placeholder="请准确输入猜物答案，字数不得超过5个字" type="text" maxlength="5">
@@ -24,7 +25,7 @@
   import {getPluginsGuess, getPluginsGuessAnwser} from "@/api/sigua";
   import {closePixelate} from "../../utils/close-pixelate";
   import Cookies from 'js-cookie';
-  var pixelOpts = [{resolution: 32}];
+  var pixelOpts = [{resolution: 16}];
   var invoke = window.WebViewInvoke
   var toast = invoke.bind('toast');
   var onPushScreen = invoke.bind('onPushScreen');
@@ -53,7 +54,8 @@
     data() {
       return {
         answer: "",
-        testimg: ""
+        testimg: "",
+        test2:true
       };
     },
 
@@ -72,6 +74,7 @@
           toast("答案不能超过五个字")
           return
         }
+        this.test2 = false
         var data = {
           name: this.answer,
           correct_answer: this.answer,
@@ -83,17 +86,21 @@
         Cookies.set('isReload', "1", {expires: 0.0002})
         var that = this
         getPluginsGuess(data).then(res => {
+
           if (res.code == 200) {
             toast("发布成功\n为确保猜物的真实合规\n你的物件已发送至芥摩\n后台审核，审核通过后\n会立即开始猜物。");
             setTimeout(function () {
               that.answer = ""
               window.localStorage.removeItem("imgurl");
               that.$router.go(-1);
+              that.test2 = true
             }, 1000)
           } else if (res.code == 1004) {
             onPushScreen({page: 'Pages/My/NameConfirmPower', params: {}});
+            that.test2 = true
           } else {
             toast(res.msg);
+            that.test2 = true
           }
         });
       },

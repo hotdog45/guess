@@ -38,7 +38,7 @@
           <img src="@/assets/images/share.png">
           <div>{{option.stat ?option.stat.forward:'0'}}</div>
         </div>
-        <div class="tipdiv">
+        <div class="tipdiv" @click="showclick2">
           <div class="tip2" style="text-align: left;" v-if="show2">{{option.name.length}}个字</div>
           <img style="width: 37px;height: 37px;" src="@/assets/images/jiji.png">
           <!--<div class="tip" style="color:#000;font-size=11px;" @click="showclick2">提示</div>-->

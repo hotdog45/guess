@@ -15,6 +15,7 @@
   import {getPluginsGuessList,
 
   } from "@/api/sigua";
+  import Cookies from 'js-cookie';
 
   function GetSlideAngle(dx, dy) {
     return Math.atan2(dy, dx) * 180 / Math.PI
@@ -71,11 +72,15 @@
         console.log("ret======="+JSON.stringify(ret))
         window.localStorage.token  = ret.token;
         console.log(window.localStorage.token)
+        // if (Cookies.get('test') != "100") {
+        //   Cookies.set('test', "100", {expires: 0.0002})
+        //   window.location.reload();
+        // }
         that.getList("1")
       }).catch();
 
       this.touchListener()
-
+      that.getList("1")
     },
     methods: {
 
