@@ -7,21 +7,21 @@
       </div>
       <div class="right">
         <div class="intro" v-if="item.userInfo">
-          <img class="avator" :src="item.userInfo.avatar+'?x-oss-process=image/resize,l_100'" alt="">
+          <img class="avator" :src="item.userInfo.avatar" alt="">
           <div class="intro-detail">
             <div class="intro-name">{{item.userInfo.nickname}} </div>
             <div class="intro-address" v-if="item.userInfo.location"> {{item.userInfo.location.city}}-{{item.userInfo.location.region}}</div>
           </div>
         </div>
         <div class="join" >{{(item.stat && item.stat.attendee_num) ?item.stat.attendee_num : 0}}人参与</div>
-        <div class="join" v-if="item.is_correct" >正确答案:{{item.answer}}</div>
+        <div class="join" v-if="item.is_correct" >正确答案:{{item.correct_answer.length>0 ? item.correct_answer[0]:""}}</div>
         <div class="join" v-else >你猜的答案:{{item.answer}}</div>
 
         <div class="btn-rapper">
           <div v-if="item.is_correct" class="right-btn success">你猜对了</div>
           <div v-else class="right-btn error">你猜错了</div>
           <div v-if="item.is_correct" class="right-btn detail-talk" @click.stop="chat">细聊</div>
-          <div v-else-if="item.state =='overdue' || item.state =='success'" class="wait">正确谜底是：{{item.answer}}</div>
+          <div v-else-if="item.state =='overdue' || item.state =='success'" class="wait">正确谜底是：{{item.correct_answer.length>0 ? item.correct_answer[0]:""}}</div>
           <div v-else class="wait">等待谜底揭晓</div>
         </div>
       </div>

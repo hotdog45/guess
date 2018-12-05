@@ -12,6 +12,10 @@ export function getPluginsGuess( params) {
 export function getPluginsGuessDesc(id) {
   return request.get("plugins/guess/" + id);
 }
+//获取猜物详情
+export function getPluginsGuessDesc2(id) {
+  return request.get("plugins/guess/detail/" + id);
+}
 
 //获取猜物列表
 export function getPluginsGuessList(page) {

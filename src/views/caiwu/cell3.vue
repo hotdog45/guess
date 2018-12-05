@@ -6,9 +6,9 @@
         <div class="join" style="font-weight: 500">正确答案:{{item.correct_answer[0]}}</div>
         <div v-if="item.state =='success' && item.correctAttendee" style="color: #F85C38;font-size: 14px;padding: 5px 0 0 0">猜中者</div>
         <div class="intro" v-if="item.state =='success' && item.correctAttendee">
-          <img class="avator" :src="item.correctAttendee.userInfo.avatar+'?x-oss-process=image/resize,l_00'" alt="">
+          <img class="avator" :src="item.correctAttendee.userInfo.avatar" alt="">
           <div class="intro-detail" v-if="item.correctAttendee.userInfo">
-            <div class="intro-name">{{item.correctAttendee.userInfo.name}}</div>
+            <div class="intro-name">{{item.correctAttendee.userInfo.nickname}}</div>
             <div class="intro-address" v-if="item.correctAttendee.userInfo.location">{{item.correctAttendee.userInfo.location.city}}-{{item.correctAttendee.userInfo.location.region}}</div>
           </div>
         </div>

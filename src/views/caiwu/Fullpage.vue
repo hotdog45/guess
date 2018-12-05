@@ -40,8 +40,8 @@
         </div>
         <div class="tipdiv">
           <div class="tip2" style="text-align: left;" v-if="show2">{{option.name.length}}个字</div>
-          <img style="width: 37px;height: 37px;" src="@/assets/images/icon2.png">
-          <div class="tip" style="color:#000;font-size=11px;" @click="showclick2">提示</div>
+          <img style="width: 37px;height: 37px;" src="@/assets/images/jiji.png">
+          <!--<div class="tip" style="color:#000;font-size=11px;" @click="showclick2">提示</div>-->
 
         </div>
 
@@ -139,7 +139,7 @@
           this.$router.go(-1);
         } else {
           goBack()
-          window.localStorage.token = ""
+          // window.localStorage.token = ""
         }
       },
       myguess() {
@@ -165,6 +165,14 @@
           onPushScreen({page: 'Pages/My/AssociationPhone', params: {}});
           return
         }
+        if (this.user.verified == null ||this.user.verified == false) {
+          onPushScreen({page: 'Pages/My/NameConfirmPower', params: {}});
+          return
+        }else {
+          console.log("通过了审核!")
+        }
+
+
         onPushScreen({
           page: 'Pages/MediaFullScreen', params: {
             from: 'GUESS',
@@ -222,7 +230,7 @@
           image: this.option.image_src,
           subTitle: "猜物",
           title: "这是什么？猜中拿走，你就是芥摩锦鲤！",
-          url: "http://guess.efet.top/details?id=" + this.option.id,
+          url: "http://guess.efet.top/details?id=" + this.option.id+"&share=1",
           topic_id: this.option.id,
           type: "guess",
         });

@@ -9,6 +9,7 @@
   import Fullpage from './Fullpage'
   import {
     getPluginsGuessDesc,
+    getPluginsGuessDesc2
   } from "@/api/sigua";
 
 
@@ -36,14 +37,25 @@
     methods: {
 
       getdata() {
-        var id = this.$route.query.id;
-        getPluginsGuessDesc(id).then(res => {
-          if (res.code == 200) {
-            this.data = res.data
-          } else {
+        let id = this.$route.query.id;
+        let share = this.$route.query.share;
+        if (share ==1) {
+          getPluginsGuessDesc2(id).then(res => {
+            if (res.code == 200) {
+              this.data = res.data
+            }
+          });
+        }else {
+          getPluginsGuessDesc(id).then(res => {
+            if (res.code == 200) {
+              this.data = res.data
+            }
+          });
+        }
 
-          }
-        });
+
+
+
       },
     },
 

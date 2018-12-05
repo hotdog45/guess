@@ -38,7 +38,6 @@ import "./utils/close-pixelate";
 import { ClosePixelation } from "./utils/close-pixelate";
 
 
-
 import axios from "axios";
 
 Vue.prototype.$axios = axios;
@@ -49,7 +48,7 @@ Object.keys(filter).forEach(key => {
   Vue.filter(key, filter[key]);
 });
 // vsconsole
-const DEBUG = false;
+const DEBUG = true;
 // false 绿色的按钮消失
 if (DEBUG) {
   const vconsole = new VConsole();
