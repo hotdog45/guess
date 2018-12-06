@@ -25,7 +25,7 @@
   import {getPluginsGuess, getPluginsGuessAnwser} from "@/api/sigua";
   import {closePixelate} from "../../utils/close-pixelate";
   import Cookies from 'js-cookie';
-  var pixelOpts = [{resolution: 16}];
+  var pixelOpts = [{resolution: 24}];
   var invoke = window.WebViewInvoke
   var toast = invoke.bind('toast');
   var onPushScreen = invoke.bind('onPushScreen');
@@ -118,50 +118,6 @@
     //created创建完毕状态
     created() {
 
-//
-//      if (Cookies.get('isReload') != "100") {
-//        Cookies.set('isReload', "100", {expires: 0.002})
-//        window.location.reload();
-//      }
-
-
-//      var imgt = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=4183927244,732328870&fm=173&app=25&f=JPEG?w=550&h=367&s=3A156984068606F5A624799C03008094";
-//
-//      window.localStorage.imgurl = imgt
-//      xxxxxxx()
-
-//      var img = document.getElementById('dolly');
-//      img.crossOrigin = '';
-//      img.src = window.localStorage.imgurl;
-
-//      testxxxxx.xxxxxxx
-
-
-//      console.log("data=============2222222" + window.localStorage.imgurl)
-//      toast("data=============2222222" + window.localStorage.imgurl);
-//      window.localStorage.imgurl = imgt
-
-
-//      var that = this
-//      window.WebViewInvoke.define('onMediaCallback', function (data) {
-//        data = data || {};
-//        console.log("data==============11111111" + JSON.stringify(data.data))
-////        toast(JSON.stringify(data));
-////        var img = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=4248526274,2373765755&fm=173&app=25&f=JPEG?w=640&h=366&s=51A782F6445939DE5E37DFB30300E009"
-////        this.testimg = img
-////        window.localStorage.imgurl = img
-//        that.testimg = JSON.stringify(data.data)
-//        window.localStorage.imgurl = JSON.stringify(data.data)
-//        Cookies.set('imgurl', JSON.stringify(data.data), { expires: 0.02 })
-//        toast("data=============2222222" +Cookies.get('imgurl'));
-////        console.log("data=============2222222" + window.localStorage.imgurl)
-//        window.location.reload();
-//
-////            if(Cookies.get('isReload') != "100"){
-////              Cookies.set('isReload', "100", { expires: 0.002 })
-////              window.location.reload();
-////            }
-//      });
 
 
     },

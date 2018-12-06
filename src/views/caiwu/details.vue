@@ -1,6 +1,6 @@
 <template>
   <div id="test" >
-      <Fullpage :option="data" :isDetail="true">
+      <Fullpage :option="data" :isDetail="share">
       </Fullpage>
   </div>
 </template>
@@ -21,7 +21,9 @@
     name: 'App',
     data () {
       return {
-        data:{},
+        data:{
+          share:false
+        },
       }
     },
     components: {
@@ -31,14 +33,13 @@
 
       this.getdata()
 
-
-
     },
     methods: {
 
       getdata() {
         let id = this.$route.query.id;
         let share = this.$route.query.share;
+        this.share = share == 2 ?true:false
         if (share ==1) {
           getPluginsGuessDesc2(id).then(res => {
             if (res.code == 200) {

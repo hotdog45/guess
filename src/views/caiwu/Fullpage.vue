@@ -7,8 +7,8 @@
   'page-current': index === currentPage}">
 
     <div class="thumb">
-      <img class="test" v-if="option.state =='overdue' ||option.state =='success' " :src="option.image_ori_src" alt="">
-      <img class="test" v-else :src="option.image_src" alt="">
+      <img class="test" v-if="option.state =='overdue' ||option.state =='success' " :src="option.image_ori_src+'?x-oss-process=image/resize,w_375'" alt="">
+      <img class="test" v-else :src="option.image_src+'?x-oss-process=image/resize,w_250'" alt="">
       <!--<img class="test" :src="option.image_src"  />-->
     </div>
 

@@ -57,7 +57,7 @@
         endX: '',
         endY: '',
         data1:{},
-        data:[],
+        data:[1],
         page:1,
 
       }
@@ -67,15 +67,12 @@
     },
     created () {
       var that=this
-      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTU0MzM4ODU5OCwiZXhwIjoxNTc0OTI0NTk4fQ.4MdHwDRbSa4eyZn5kbDqxsJS0zmHA94KLQG2O_KzwyM"
+      window.localStorage.token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTQ0MDYyNTA1LCJleHAiOjE1NzU1OTg1MDV9.TZPkD3B7WVYTGhU8jd83TZ0ZKpdZgGKjT04TtbN3BXw"
       getLocalUser().then(ret=>{
         console.log("ret======="+JSON.stringify(ret))
         window.localStorage.token  = ret.token;
         console.log(window.localStorage.token)
-        // if (Cookies.get('test') != "100") {
-        //   Cookies.set('test', "100", {expires: 0.0002})
-        //   window.location.reload();
-        // }
+
         that.getList("1")
       }).catch();
 
@@ -114,12 +111,21 @@
         getPluginsGuessList(page).then(res => {
           if (res.code == 200) {
             this.data1 = res.data
-            if (this.data.length >1){
+            if (this.data.length >2){
               res.data.records.forEach((record, index) => {
                 this.data.push(record)
               });
             }else {
-              this.data = res.data.records
+              this.data = ["1"]
+              if (res.data != null && res.data.records != null) {
+                // this.data = res.data.records[0]
+                res.data.records.forEach((record, index) => {
+                  this.data.push(record)
+                });
+              }else {
+                this.data.push("2")
+              }
+
             }
 
             this.$children.forEach((child, index) => {

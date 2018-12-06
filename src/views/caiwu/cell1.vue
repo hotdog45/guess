@@ -1,12 +1,12 @@
 <template>
     <div class="content" v-if="item" >
-      <div class="left">
+      <div class="left" @click.stop.prevent="details">
 
         <img v-if="(item.state =='overdue' ||item.state =='success') && item.image_ori_src"  :src="item.image_ori_src+'?x-oss-process=image/resize,l_200'" alt="">
         <img v-else :src="item.image_src+'?x-oss-process=image/resize,l_200'" alt="">
       </div>
       <div class="right">
-        <div class="intro" v-if="item.userInfo">
+        <div class="intro" v-if="item.userInfo" @click.stop="user">
           <img class="avator" :src="item.userInfo.avatar" alt="">
           <div class="intro-detail">
             <div class="intro-name">{{item.userInfo.nickname}} </div>
@@ -29,7 +29,9 @@
 </template>
 
 <script>
-
+  var invoke = window.WebViewInvoke
+  var toast = invoke.bind('toast');
+  var onPushScreen = invoke.bind('onPushScreen');
   export default {
     components: {},
     data() {
@@ -40,7 +42,16 @@
     methods: {
       chat(){
         this.$emit('chat', this.item)
-      }
+      },
+
+      user(){
+        // alert("this.item.userInfo.user_id"+this.item.userInfo.user_id)
+        onPushScreen({
+          page: 'Pages/My/PersonalData', params: {
+            user_id:this.item.userInfo.user_id
+          }
+        });
+      },
 //      chat(){
 //        var guess_owner={
 //          nickname:this.item.correctAttendee.userInfo.nickname,
@@ -52,6 +63,12 @@
 //          toast(ret); // 客户端应将结果缓存，避免重复创建会话
 //        }).catch();
 //      },
+
+      details(){
+        this.$router.push({
+          path: '/details?share=2&id='+this.item.id,
+        })
+      },
     },
 
     //created创建完毕状态

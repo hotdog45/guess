@@ -5,7 +5,7 @@
         <div class="join" >{{(item.stat && item.stat.attendee_num) ?item.stat.attendee_num : 0}}人参与</div>
         <div class="join" style="font-weight: 500">正确答案:{{item.correct_answer[0]}}</div>
         <div v-if="item.state =='success' && item.correctAttendee" style="color: #F85C38;font-size: 14px;padding: 5px 0 0 0">猜中者</div>
-        <div class="intro" v-if="item.state =='success' && item.correctAttendee">
+        <div class="intro" v-if="item.state =='success' && item.correctAttendee"   @click.stop="user">
           <img class="avator" :src="item.correctAttendee.userInfo.avatar" alt="">
           <div class="intro-detail" v-if="item.correctAttendee.userInfo">
             <div class="intro-name">{{item.correctAttendee.userInfo.nickname}}</div>
@@ -24,9 +24,9 @@
           {{dateFormat(item.last_update)}}</div>
 
       </div>
-      <div class="left">
-        <img v-if="item.state =='overdue' ||item.state =='success' "  :src="item.image_ori_src+'?x-oss-process=image/resize,l_200'" alt="">
-        <img v-else :src="item.image_src+'?x-oss-process=image/resize,l_200'" alt="">
+      <div class="left" @click.stop.prevent="details">
+        <!--<img v-if="item.state =='overdue' ||item.state =='success' "  :src="item.image_ori_src+'?x-oss-process=image/resize,l_200'" alt="">-->
+        <img  :src="item.image_ori_src+'?x-oss-process=image/resize,l_200'" alt="">
       </div>
     </div>
   </div>
@@ -35,6 +35,9 @@
 <script>
   var onConfirmChat = window.WebViewInvoke.bind('onConfirmChat');
   var toast = window.WebViewInvoke.bind('toast');
+
+  var invoke = window.WebViewInvoke
+  var onPushScreen = invoke.bind('onPushScreen');
   export default {
     components: {},
     data() {
@@ -55,6 +58,16 @@
 //          toast(ret); // 客户端应将结果缓存，避免重复创建会话
 //        }).catch();
       },
+
+      user(){
+        // alert("this.item.userInfo.user_id"+this.item.correctAttendee.userInfo.user_id)
+        onPushScreen({
+          page: 'Pages/My/PersonalData', params: {
+            user_id:this.item.correctAttendee.userInfo.user_id
+          }
+        });
+      },
+
       dateFormat (value) {
         var value=new Date(value);
         value.setDate(value.getDate()+14)
@@ -62,6 +75,12 @@
         var month = value.getMonth() + 1;
         var day = value.getDate();
         return year + '年' + month + '月' + day + '号';
+      },
+
+      details(){
+        this.$router.push({
+          path: '/details?share=2&id='+this.item.id,
+        })
       },
     },
     //created创建完毕状态

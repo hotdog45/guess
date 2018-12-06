@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #fff">
     <!--{{message}}-->
     <div class="top-bar" @click="top">我的猜物
       <div class="img-rapper"><img @click="back" class='back' src="@/assets/images/back2.png" alt=""></div>
@@ -13,7 +13,7 @@
     </div>
     <!--<div>私聊</div>-->
 
-    <div v-if="sel==0" v-for="(item,index) in list2" @click.stop.prevent="details(index)">
+    <div v-if="sel==0" v-for="(item,index) in list2" >
       <cell1 :item="item" @chat="chat2"></cell1>
     </div>
 
@@ -92,15 +92,15 @@
         this.$router.go(-1);
       },
       details(num){
-        var json ;
-        if (this.sel == 0){
-          json = this.list2[num]
-        }else {
-          json = this.list1[num]
-        }
-        this.$router.push({
-          path: '/details?id='+json.id,
-        })
+        // var json ;
+        // if (this.sel == 0){
+        //   json = this.list2[num]
+        // }else {
+        //   json = this.list1[num]
+        // }
+        // this.$router.push({
+        //   path: '/details?share=2&id='+json.id,
+        // })
       },
 
 

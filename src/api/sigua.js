@@ -19,7 +19,7 @@ export function getPluginsGuessDesc2(id) {
 
 //获取猜物列表
 export function getPluginsGuessList(page) {
-  return axios.get(`${base}/plugins/guess?page_size=100&page=`+page+`&state=inprogress`+`&token=`+window.localStorage.token,headers1)
+  return axios.get(`${base}/plugins/guess?page_size=20&random=1&page=`+page+`&state=inprogress`+`&token=`+window.localStorage.token,headers1)
     .then(res => res.data);
 }
 
