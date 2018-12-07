@@ -117,7 +117,7 @@
               });
             }else {
               this.data = ["1"]
-              if (res.data != null && res.data.records != null) {
+              if (res.data != null && res.data.records.length > 0) {
                 // this.data = res.data.records[0]
                 res.data.records.forEach((record, index) => {
                   this.data.push(record)

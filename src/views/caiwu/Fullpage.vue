@@ -230,7 +230,7 @@
           image: this.option.image_src,
           subTitle: "猜物",
           title: "这是什么？猜中拿走，你就是芥摩锦鲤！",
-          url: "http://guess.efet.top/details?id=" + this.option.id+"&share=1",
+          url: "http://guess.jamootime.com/details?id=" + this.option.id+"&share=1",
           topic_id: this.option.id,
           type: "guess",
         });

@@ -37,7 +37,9 @@
     img.crossOrigin = '';
     imgq = window.localStorage.imgurl;
     console.log("imgq"+imgq);
-    var img750 = window.localStorage.imgurl+'?x-oss-process=image/resize,w_750';
+    // var img750 = window.localStorage.imgurl+'?x-oss-process=image/resize,w_750';
+    var img750 = 'https://upload.jianshu.io/admin_banners/web_images/4581/14d959ff757f21616baa933fd3bdbfcf52fd512a.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/1250/h/540'
+    imgq = img750
     img.src = img750
     console.log("img750"+img750);
 //    img.src = imgq;

@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: "/",
     proxyTable: {
       "/host": {
-        target: "http://120.24.212.29:3000", // 接口域名
-        // target: "http://127.0.0.1.8081", // 接口域名
+        // target: "http://120.24.212.29:3000", // 接口域名
+        target: "https://api.jamootime.com", // 接口域名
         // target: "http://139.196.79.85:8080", // 接口域名 正式
         changeOrigin: true, //是否跨域
         pathRewrite: {
