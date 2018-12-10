@@ -3,8 +3,7 @@
 */
 <template>
   <div class="full-page" v-if="option" :class="{ 'page-before': index < currentPage,
-'page-after': index > currentPage,
-  'page-current': index === currentPage}">
+'page-after': index > currentPage,'page-current': index === currentPage}">
 
     <div class="thumb">
       <img class="test" v-if="option.state =='overdue' ||option.state =='success' " :src="option.image_ori_src+'?x-oss-process=image/resize,w_375'" alt="">
@@ -153,6 +152,7 @@
           path: '/myguess',
         })
       },
+
       publicGuess() {
 
         var token = window.localStorage.token
@@ -183,7 +183,7 @@
         var that = this
         window.WebViewInvoke.define('onMediaCallback', function (data) {
           data = data || {};
-          var imgt = data.data + ""
+          let imgt = data.data + ""
           window.localStorage.imgurl = imgt
           if (window.localStorage.imgurl) {
             that.$router.push({

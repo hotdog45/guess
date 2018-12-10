@@ -5,12 +5,15 @@
       <div class="img-rapper"><img @click="back" class='back' src="@/assets/images/back2.png" alt=""></div>
     </div>
 
-    <div class="header">
-      <div class="btn1" v-if="sel==0">我猜</div>
-      <div class="btn3" v-else @click="choose(0)">我猜</div>
-      <div class="btn2" v-if="sel==1">我发</div>
-      <div class="btn4" v-else @click="choose(1)">我发</div>
+    <div class="header2">
+      <div class="header">
+        <div class="btn1" v-if="sel==0">我猜</div>
+        <div class="btn3" v-else @click="choose(0)">我猜</div>
+        <div class="btn2" v-if="sel==1">我发</div>
+        <div class="btn4" v-else @click="choose(1)">我发</div>
+      </div>
     </div>
+
     <!--<div>私聊</div>-->
 
     <div v-if="sel==0" v-for="(item,index) in list2" >
@@ -166,11 +169,21 @@
 
 <style lang="less" rel="stylesheet/less" scoped>
   .header {
+
     display: flex;
     flex-direction: row;
-    margin: 0 27px;
+
     background: #e6e6e6;
     border-radius: 22px;
+
+  }
+
+  .header2{
+    position: sticky;
+    top: 56px;
+    margin: 0 27px;
+    z-index: 1111;
+    background: #fff;
   }
 
   .header div {
