@@ -53,19 +53,19 @@ const DEBUG = false;
 if (DEBUG) {
   const vconsole = new VConsole();
 }
-import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
-NProgress.configure({ease:'ease',speed:500});
-router.beforeEach((to, from, next) => {
-  if(to.path == '/') {
-    sessionStorage.clear();
-  }
-  NProgress.start();
-  next()
-});
-router.afterEach(transition => {
-  NProgress.done();
-});
+// import NProgress from 'nprogress'
+// import 'nprogress/nprogress.css'
+// NProgress.configure({ease:'ease',speed:500});
+// router.beforeEach((to, from, next) => {
+//   if(to.path == '/') {
+//     sessionStorage.clear();
+//   }
+//   NProgress.start();
+//   next()
+// });
+// router.afterEach(transition => {
+//   NProgress.done();
+// });
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

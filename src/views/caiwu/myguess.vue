@@ -1,18 +1,21 @@
 <template>
   <div style="background: #fff">
     <!--{{message}}-->
-    <div class="top-bar" @click="top">我的猜物
-      <div class="img-rapper"><img @click="back" class='back' src="@/assets/images/back2.png" alt=""></div>
-    </div>
+    <div class="topview">
+      <div class="top-bar" @click="top">我的猜物
+        <div class="img-rapper"><img @click="back" class='back' src="@/assets/images/back2.png" alt=""></div>
+      </div>
 
-    <div class="header2">
-      <div class="header">
-        <div class="btn1" v-if="sel==0">我猜</div>
-        <div class="btn3" v-else @click="choose(0)">我猜</div>
-        <div class="btn2" v-if="sel==1">我发</div>
-        <div class="btn4" v-else @click="choose(1)">我发</div>
+      <div class="header2">
+        <div class="header">
+          <div class="btn1" v-if="sel==0">我猜</div>
+          <div class="btn3" v-else @click="choose(0)">我猜</div>
+          <div class="btn2" v-if="sel==1">我发</div>
+          <div class="btn4" v-else @click="choose(1)">我发</div>
+        </div>
       </div>
     </div>
+
 
     <!--<div>私聊</div>-->
 
@@ -212,6 +215,12 @@
     background: #e6e6e6;
   }
 
+  .topview{
+    position: sticky;
+    top: 0;
+    z-index: 1111;
+    background: #fff;
+  }
   .top-bar {
     position: sticky;
     top: 0;

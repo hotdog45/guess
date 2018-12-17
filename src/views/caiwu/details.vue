@@ -16,6 +16,7 @@
   var invoke = window.WebViewInvoke
   var toast = invoke.bind('toast');
   var getLocalUser = window.WebViewInvoke.bind('getLocalUser');
+  const hideLoading = window.WebViewInvoke.bind('hideLoading');
 
   export default {
     name: 'App',
@@ -33,6 +34,11 @@
 
       this.getdata()
 
+    },
+    mounted(){
+      // setTimeout(function() {
+        hideLoading();
+      // }, 200)
     },
     methods: {
 

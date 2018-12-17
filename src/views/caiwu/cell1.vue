@@ -7,7 +7,8 @@
       </div>
       <div class="right">
         <div class="intro" v-if="item.userInfo" @click.stop="user">
-          <img class="avator" :src="item.userInfo.avatar" alt="">
+          <img class="avator" v-if="!isWx(item.userInfo.avatar)" :src="item.userInfo.avatar+'?x-oss-process=image/resize,w_100/auto-orient,1'" alt="">
+          <img class="avator" v-else :src="item.userInfo.avatar" alt="">
           <div class="intro-detail">
             <div class="intro-name">{{item.userInfo.nickname}} </div>
             <div class="intro-address" v-if="item.userInfo.location"> {{item.userInfo.location.city}}-{{item.userInfo.location.region}}</div>
@@ -42,6 +43,9 @@
     methods: {
       chat(){
         this.$emit('chat', this.item)
+      },
+      isWx(val){
+        return val.indexOf("amootime.com") != -1
       },
 
       user(){
